@@ -5,6 +5,19 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.6] - 2025-01-21
+
+### Added
+- **styles.csv**: 6 new 2026 styles (Bento Grid, Neubrutalism 2026, Organic Biophilic, VisionOS Spatial, Conversational AI UI, Agentic Workflow UI)
+- **colors.csv**: 5 new modern color entries (OKLCH Color Space, color-mix() Dynamic Palettes, Display P3 Wide Gamut, AI Confidence Semantic Colors, Earth Biophilic Palette)
+- **prompts.csv**: 8 new AI design prompts for 2026 patterns
+- **icons.csv**: 5 new AI/accessibility icons
+- **typography.csv**: Fluid responsive typography and variable font axes entries
+- **charts.csv**: Observable Plot and Nivo library recommendations
+
+### Fixed
+- CSV formatting issues in colors.csv rows 116-120
+
 ## [1.1.5] - 2026-01-18
 
 ### Added - New Landing Patterns

@@ -7,7 +7,7 @@
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![GitHub stars](https://img.shields.io/github/stars/redf0x1/ui-ux-pro-mcp?style=flat-square)](https://github.com/redf0x1/ui-ux-pro-mcp/stargazers)
 
-> **AI-powered UI/UX design intelligence** — Instantly access 1410+ curated design resources through natural language search.
+> **AI-powered UI/UX design intelligence** — Instantly access 1470+ curated design resources through natural language search.
 
 ---
 
@@ -15,7 +15,7 @@
 
 | Feature | Details |
 |---------|---------|
-| 📚 **1410+ Documents** | Curated design knowledge across 11 domains |
+| 📚 **1470+ Documents** | Curated design knowledge across 11 domains |
 | 🔧 **11 Tools** | Specialized search for styles, colors, typography, charts, icons, and more |
 | ⚡ **BM25 Ranking** | Fast, relevant search results using industry-standard text ranking |
 | 🔗 **Universal** | Works with VS Code, Claude Desktop, Cursor, and any MCP-compatible client |
@@ -169,15 +169,15 @@ Add to your Claude Desktop configuration:
 
 | Tool | Documents | Description |
 |------|-----------|-------------|
-| `search_ui_styles` | 70 | UI design styles (Glassmorphism, Minimalism, Brutalism, etc.) with colors, effects, and use cases |
-| `search_colors` | 112 | Color palettes for industries (SaaS, Healthcare, Fintech) with hex codes |
-| `search_typography` | 72 | Font pairings with Google Fonts imports and Tailwind configs |
-| `search_charts` | 35 | Chart types with implementation recommendations for dashboards |
+| `search_ui_styles` | 85 | UI design styles (Glassmorphism, Minimalism, Brutalism, etc.) with colors, effects, and use cases |
+| `search_colors` | 121 | Color palettes for industries (SaaS, Healthcare, Fintech) with hex codes |
+| `search_typography` | 74 | Font pairings with Google Fonts imports and Tailwind configs |
+| `search_charts` | 37 | Chart types with implementation recommendations for dashboards |
 | `search_ux_guidelines` | 115 | UX best practices, do's and don'ts, accessibility (WCAG) |
-| `search_icons` | 131 | Curated Lucide icons with import codes and use cases |
+| `search_icons` | 176 | Curated Lucide icons with import codes and use cases |
 | `search_landing` | 49 | Landing patterns, Bento Grids (Config & Maps), Responsive Strategy |
 | `search_products` | 114 | Product type design recommendations per industry |
-| `search_prompts` | 30 | AI prompt templates with CSS snippets and implementation checklists |
+| `search_prompts` | 39 | AI prompt templates with CSS snippets and implementation checklists |
 | `search_stack` | 660 | Framework-specific guidelines (React, Vue, Next.js, Flutter, etc.) |
 | `search_all` | All | Unified search across all design domains |
 | `get_design_system` | — | Generate complete design system with colors, typography, UI style, and layout in one call |
@@ -221,15 +221,15 @@ This server aggregates curated design intelligence from multiple domains:
 
 | Domain | File | Count | Content |
 |--------|------|-------|---------|
-| Styles | `styles.csv` | 70 | UI design trends, effects, animations |
-| Colors | `colors.csv` | 112 | Industry-specific color palettes |
-| Typography | `typography.csv` | 72 | Font pairings and configurations |
-| Charts | `charts.csv` | 35 | Data visualization recommendations |
+| Styles | `styles.csv` | 85 | UI design trends, effects, animations |
+| Colors | `colors.csv` | 121 | Industry-specific color palettes |
+| Typography | `typography.csv` | 74 | Font pairings and configurations |
+| Charts | `charts.csv` | 37 | Data visualization recommendations |
 | UX Guidelines | `ux-guidelines.csv` | 115 | Usability and accessibility best practices |
-| Icons | `icons.csv` | 131 | Lucide icon recommendations |
-| Landing | `landing.csv` | 40 | Patterns, Bento Layout Maps, Responsive Strategy |
+| Icons | `icons.csv` | 176 | Lucide icon recommendations |
+| Landing | `landing.csv` | 49 | Patterns, Bento Layout Maps, Responsive Strategy |
 | Products | `products.csv` | 114 | Industry design recommendations |
-| Prompts | `prompts.csv` | 30 | AI prompt templates |
+| Prompts | `prompts.csv` | 39 | AI prompt templates |
 | Stacks | `stacks/*.csv` | 660 | Framework-specific guidelines (11 stacks) |
 
 **Available Framework Stacks:**
