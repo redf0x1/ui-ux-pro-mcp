@@ -5,6 +5,36 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-01-18
+
+### Added
+- **landing.csv**:
+  - Scroll-Reactive Header (navbar scroll effect with glassmorphism)
+  - Mobile Navigation Overlay (hamburger menu with slide animation)
+  - Modern Footer Layout (multi-column grid, social icons, newsletter)
+  - Section Dividers (wave SVG, diagonal clip-path, gradient fade)
+  - Content Slider Carousel (track, dots, arrows, autoplay JS)
+- **styles.csv**:
+  - Navbar Glassmorphism States (component with default/scrolled/mobile states)
+  - Theme Toggle (sun/moon rotation animation)
+- **ux-guidelines.csv**:
+  - Navbar Scroll Threshold (50-100px guidance)
+  - Navbar Transition Timing (0.3-0.4s cubic-bezier)
+  - Mobile Menu Animation Patterns
+  - Blur-Up Image Loading effect
+  - Skeleton Shimmer animation pattern
+- **prompts.csv**:
+  - Interactive Particle Background pattern
+
+### Enhanced
+- **styles.csv**: Glassmorphism entry updated with navbar-specific states
+
+### Summary
+- All content gaps from CryptoVault landing page test addressed
+- HIGH priority: Navbar scroll, Footer patterns, Mobile menu ✅
+- MEDIUM priority: Theme toggle, Slider, Image lazy, Section dividers ✅
+- LOW priority: Particles, Glassmorphism states ✅
+
 ## [1.1.1] - 2026-01-18
 
 ### Fixed
