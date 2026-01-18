@@ -5,6 +5,11 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-01-18
+
+### Fixed
+- Fixed CSV parsing errors in landing.csv (rows 41, 42, 45) caused by unquoted rgba() values and comma-separated lists
+
 ## [1.1.2] - 2026-01-18
 
 ### Added
