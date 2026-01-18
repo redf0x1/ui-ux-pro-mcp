@@ -5,6 +5,37 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2026-01-18
+
+### Enhanced
+- **landing.csv Row 41 (Scroll-Reactive Header)**:
+  - Added explicit height transition (80px → 56px)
+  - Added CSS scroll-driven animation with `animation-timeline: scroll()`
+  - Added `@supports` feature detection with JS fallback
+
+### Added
+- **landing.csv Row 46**: Auto-Hiding Header pattern
+  - Hide on scroll down, show on scroll up (Linear/Vercel style)
+  - Direction-aware scroll tracking with `prevScrollY`
+  - `requestAnimationFrame` for performance
+  - 80px threshold before hiding
+  
+- **ux-guidelines.csv Row 129**: Header Height Transition guidelines
+  - Best practice: 80px → 56px with 0.3s ease-out
+
+- **ux-guidelines.csv Row 130**: Auto-Hide Navigation Direction
+  - Direction tracking with threshold guidelines
+
+### Updated
+- **styles.csv Row 76**: Navbar Glassmorphism States
+  - Added CSS `animation-timeline: scroll()` code (90%+ browser support 2026)
+  - Updated era tag to "2026 Modern"
+
+### Summary
+- Deep research from Perplexity confirms 2026 best practices
+- CSS scroll-driven animations now primary with JS fallback
+- Auto-hiding header pattern addresses major gap
+
 ## [1.1.3] - 2026-01-18
 
 ### Fixed
