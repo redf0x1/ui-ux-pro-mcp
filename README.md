@@ -1,6 +1,7 @@
 # 🎨 UI/UX Pro MCP Server
 
 [![npm version](https://img.shields.io/npm/v/ui-ux-pro-mcp.svg?style=flat-square)](https://www.npmjs.com/package/ui-ux-pro-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/ui-ux-pro-mcp.svg?style=flat-square)](https://www.npmjs.com/package/ui-ux-pro-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green.svg?style=flat-square)](https://modelcontextprotocol.io/)
@@ -24,14 +25,20 @@
 
 ## 🚀 Quick Start
 
-### Option 1: NPX (Coming Soon)
+### Option 1: NPX (Recommended)
 
 ```bash
-# Will be available after npm publish
 npx ui-ux-pro-mcp
 ```
 
-### Option 2: From Source
+### Option 2: Global Install
+
+```bash
+npm install -g ui-ux-pro-mcp
+ui-ux-pro-mcp
+```
+
+### Option 3: From Source
 
 ```bash
 # Clone the repository
@@ -55,6 +62,34 @@ npm start
 ### VS Code / Cursor
 
 Add to your MCP settings (`settings.json` or `mcp.json`):
+
+#### Option A: Using NPX (Recommended - No Installation Required)
+
+```json
+{
+  "mcpServers": {
+    "ui-ux-pro": {
+      "command": "npx",
+      "args": ["ui-ux-pro-mcp", "--stdio"]
+    }
+  }
+}
+```
+
+#### Option B: Using Global Install
+
+```json
+{
+  "mcpServers": {
+    "ui-ux-pro": {
+      "command": "ui-ux-pro-mcp",
+      "args": ["--stdio"]
+    }
+  }
+}
+```
+
+#### Option C: From Source
 
 ```json
 {
@@ -85,6 +120,34 @@ Add to your Claude Desktop configuration:
 **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 
 **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+#### Option A: Using NPX (Recommended - No Installation Required)
+
+```json
+{
+  "mcpServers": {
+    "ui-ux-pro": {
+      "command": "npx",
+      "args": ["ui-ux-pro-mcp", "--stdio"]
+    }
+  }
+}
+```
+
+#### Option B: Using Global Install
+
+```json
+{
+  "mcpServers": {
+    "ui-ux-pro": {
+      "command": "ui-ux-pro-mcp",
+      "args": ["--stdio"]
+    }
+  }
+}
+```
+
+#### Option C: From Source
 
 ```json
 {

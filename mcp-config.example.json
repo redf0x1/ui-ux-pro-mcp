@@ -1,12 +1,30 @@
 {
+  "_comment": "Choose ONE of the following configurations:",
+
+  "_option_A_npx": "Recommended - No installation required",
+  "mcpServers_npx": {
+    "ui-ux-pro": {
+      "command": "npx",
+      "args": ["ui-ux-pro-mcp", "--stdio"]
+    }
+  },
+
+  "_option_B_global": "Using global npm install",
+  "mcpServers_global": {
+    "ui-ux-pro": {
+      "command": "ui-ux-pro-mcp",
+      "args": ["--stdio"]
+    }
+  },
+
+  "_option_C_source": "From source code",
   "mcpServers": {
     "ui-ux-pro": {
       "command": "node",
       "args": [
-        "<path>/ui-ux-pro-mcp/dist/index.js",
+        "/path/to/ui-ux-pro-mcp/dist/index.js",
         "--stdio"
-      ],
-      "env": {}
+      ]
     }
   }
 }
