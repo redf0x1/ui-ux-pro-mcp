@@ -5,6 +5,13 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-01-18
+
+### Changed
+- Added npm version and downloads badges to README
+- Improved installation documentation with NPX, global install, and source options
+- Enhanced MCP configuration examples for VS Code, Cursor, and Claude Desktop
+
 ## [1.0.0] - 2026-01-17
 
 ### Added

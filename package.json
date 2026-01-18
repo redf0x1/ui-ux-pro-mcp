@@ -1,6 +1,6 @@
 {
   "name": "ui-ux-pro-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP Server for UI/UX design intelligence - styles, colors, typography, charts, icons",
   "main": "dist/index.js",
   "type": "module",
