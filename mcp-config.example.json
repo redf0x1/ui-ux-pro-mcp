@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ui-ux-pro": {
+      "command": "node",
+      "args": [
+        "<path>/ui-ux-pro-mcp/dist/index.js",
+        "--stdio"
+      ],
+      "env": {}
+    }
+  }
+}

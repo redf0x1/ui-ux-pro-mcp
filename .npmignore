@@ -1,0 +1,27 @@
+# Source files (we ship compiled dist/)
+src/
+tsconfig.json
+
+# Dev/test files
+*.test.ts
+*.test.js
+test-*.ts
+test-*.js
+TODO.md
+CONTRIBUTING.md
+
+# Config files
+.vscode/
+.github/
+.git/
+.gitignore
+mcp-config.example.json
+
+# Build artifacts not needed
+node_modules/
+*.log
+*.tgz
+
+# Examples and scripts (dev only)
+examples/
+scripts/

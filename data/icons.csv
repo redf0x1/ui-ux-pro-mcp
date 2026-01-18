@@ -1,0 +1,132 @@
+STT,Category,Icon Name,Keywords,Library,Import Code,Usage,Best For,Style,Animation_Class
+1,Navigation,menu,hamburger menu navigation toggle bars,Lucide,import { Menu } from 'lucide-react',<Menu />,Mobile navigation drawer toggle sidebar,Outline,transition-transform hover:scale-105
+2,Navigation,arrow-left,back previous return navigate,Lucide,import { ArrowLeft } from 'lucide-react',<ArrowLeft />,Back button breadcrumb navigation,Outline,hover:-translate-x-1 transition-transform
+3,Navigation,arrow-right,next forward continue navigate,Lucide,import { ArrowRight } from 'lucide-react',<ArrowRight />,Forward button next step CTA,Outline,group-hover:translate-x-1 transition-transform
+4,Navigation,chevron-down,dropdown expand accordion select,Lucide,import { ChevronDown } from 'lucide-react',<ChevronDown />,Dropdown toggle accordion header,Outline,transition-transform data-[state=open]:rotate-180
+5,Navigation,chevron-up,collapse close accordion minimize,Lucide,import { ChevronUp } from 'lucide-react',<ChevronUp />,Accordion collapse minimize,Outline,transition-transform data-[state=open]:rotate-180
+6,Navigation,home,homepage main dashboard start,Lucide,import { Home } from 'lucide-react',<Home />,Home navigation main page,Outline,hover:scale-110 transition-transform
+7,Navigation,x,close cancel dismiss remove exit,Lucide,import { X } from 'lucide-react',<X />,Modal close dismiss button,Outline,hover:rotate-90 transition-transform
+8,Navigation,external-link,open new tab external link,Lucide,import { ExternalLink } from 'lucide-react',<ExternalLink />,External link indicator,Outline,group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform
+9,Action,plus,add create new insert,Lucide,import { Plus } from 'lucide-react',<Plus />,Add button create new item,Outline,hover:rotate-90 transition-transform
+10,Action,minus,remove subtract decrease delete,Lucide,import { Minus } from 'lucide-react',<Minus />,Remove item quantity decrease,Outline,hover:scale-110 transition-transform
+11,Action,trash-2,delete remove discard bin,Lucide,import { Trash2 } from 'lucide-react',<Trash2 />,Delete action destructive,Outline,hover:scale-110 hover:text-red-500 transition-all
+12,Action,edit,pencil modify change update,Lucide,import { Edit } from 'lucide-react',<Edit />,Edit button modify content,Outline,hover:scale-110 transition-transform
+13,Action,save,disk store persist save,Lucide,import { Save } from 'lucide-react',<Save />,Save button persist changes,Outline,hover:scale-110 transition-transform
+14,Action,download,export save file download,Lucide,import { Download } from 'lucide-react',<Download />,Download file export,Outline,hover:translate-y-0.5 transition-transform active:animate-bounce
+15,Action,upload,import file attach upload,Lucide,import { Upload } from 'lucide-react',<Upload />,Upload file import,Outline,hover:-translate-y-0.5 transition-transform active:animate-bounce
+16,Action,copy,duplicate clipboard paste,Lucide,import { Copy } from 'lucide-react',<Copy />,Copy to clipboard,Outline,hover:scale-110 active:scale-95 transition-transform
+17,Action,share,social distribute send,Lucide,import { Share } from 'lucide-react',<Share />,Share button social,Outline,hover:scale-110 transition-transform
+18,Action,search,find lookup filter query,Lucide,import { Search } from 'lucide-react',<Search />,Search input bar,Outline,hover:scale-105 transition-transform
+19,Action,filter,sort refine narrow options,Lucide,import { Filter } from 'lucide-react',<Filter />,Filter dropdown sort,Outline,hover:scale-105 transition-transform
+20,Action,settings,gear cog preferences config,Lucide,import { Settings } from 'lucide-react',<Settings />,Settings page configuration,Outline,hover:rotate-90 transition-transform duration-300
+21,Status,check,success done complete verified,Lucide,import { Check } from 'lucide-react',<Check />,Success state checkmark,Outline,animate-ping-once scale-110
+22,Status,check-circle,success verified approved complete,Lucide,import { CheckCircle } from 'lucide-react',<CheckCircle />,Success badge verified,Outline,animate-ping-once scale-110
+23,Status,x-circle,error failed cancel rejected,Lucide,import { XCircle } from 'lucide-react',<XCircle />,Error state failed,Outline,animate-pulse
+24,Status,alert-triangle,warning caution attention danger,Lucide,import { AlertTriangle } from 'lucide-react',<AlertTriangle />,Warning message caution,Outline,animate-pulse
+25,Status,alert-circle,info notice information help,Lucide,import { AlertCircle } from 'lucide-react',<AlertCircle />,Info notice alert,Outline,animate-pulse
+26,Status,info,information help tooltip details,Lucide,import { Info } from 'lucide-react',<Info />,Information tooltip help,Outline,hover:scale-110 transition-transform
+27,Status,loader,loading spinner processing wait,Lucide,import { Loader } from 'lucide-react',<Loader className="animate-spin" />,Loading state spinner,Outline,animate-spin
+28,Status,clock,time schedule pending wait,Lucide,import { Clock } from 'lucide-react',<Clock />,Pending time schedule,Outline,animate-pulse
+29,Communication,mail,email message inbox letter,Lucide,import { Mail } from 'lucide-react',<Mail />,Email contact inbox,Outline,hover:scale-110 data-[unread=true]:animate-pulse transition-transform
+30,Communication,message-circle,chat comment bubble conversation,Lucide,import { MessageCircle } from 'lucide-react',<MessageCircle />,Chat comment message,Outline,hover:scale-110 transition-transform
+31,Communication,phone,call mobile telephone contact,Lucide,import { Phone } from 'lucide-react',<Phone />,Phone contact call,Outline,hover:scale-110 animate-pulse-on-ring transition-transform
+32,Communication,send,submit dispatch message airplane,Lucide,import { Send } from 'lucide-react',<Send />,Send message submit,Outline,hover:translate-x-1 hover:-translate-y-1 transition-transform
+33,Communication,bell,notification alert ring reminder,Lucide,import { Bell } from 'lucide-react',<Bell />,Notification bell alert,Outline,hover:animate-wiggle data-[notify=true]:animate-bounce
+34,User,user,profile account person avatar,Lucide,import { User } from 'lucide-react',<User />,User profile account,Outline,hover:scale-110 transition-transform
+35,User,users,team group people members,Lucide,import { Users } from 'lucide-react',<Users />,Team group members,Outline,hover:scale-105 transition-transform
+36,User,user-plus,add invite new member,Lucide,import { UserPlus } from 'lucide-react',<UserPlus />,Add user invite,Outline,hover:scale-110 transition-transform
+37,User,log-in,signin authenticate enter,Lucide,import { LogIn } from 'lucide-react',<LogIn />,Login signin,Outline,group-hover:translate-x-1 transition-transform
+38,User,log-out,signout exit leave logout,Lucide,import { LogOut } from 'lucide-react',<LogOut />,Logout signout,Outline,group-hover:translate-x-1 transition-transform
+39,Media,image,photo picture gallery thumbnail,Lucide,import { Image } from 'lucide-react',<Image />,Image photo gallery,Outline,hover:scale-105 transition-transform
+40,Media,video,movie film play record,Lucide,import { Video } from 'lucide-react',<Video />,Video player media,Outline,hover:scale-105 transition-transform
+41,Media,play,start video audio media,Lucide,import { Play } from 'lucide-react',<Play />,Play button video audio,Outline,hover:scale-110 transition-transform
+42,Media,pause,stop halt video audio,Lucide,import { Pause } from 'lucide-react',<Pause />,Pause button media,Outline,hover:scale-110 transition-transform
+43,Media,volume-2,sound audio speaker music,Lucide,import { Volume2 } from 'lucide-react',<Volume2 />,Volume audio sound,Outline,hover:scale-105 transition-transform
+44,Media,mic,microphone record voice audio,Lucide,import { Mic } from 'lucide-react',<Mic />,Microphone voice record,Outline,data-[recording=true]:animate-pulse hover:scale-110 transition-transform
+45,Media,camera,photo capture snapshot picture,Lucide,import { Camera } from 'lucide-react',<Camera />,Camera photo capture,Outline,hover:scale-110 active:scale-95 transition-transform
+46,Commerce,shopping-cart,cart checkout basket buy,Lucide,import { ShoppingCart } from 'lucide-react',<ShoppingCart />,Shopping cart e-commerce,Outline,hover:scale-110 data-[items=true]:animate-bounce transition-transform
+47,Commerce,shopping-bag,purchase buy store bag,Lucide,import { ShoppingBag } from 'lucide-react',<ShoppingBag />,Shopping bag purchase,Outline,hover:scale-110 transition-transform
+48,Commerce,credit-card,payment card checkout stripe,Lucide,import { CreditCard } from 'lucide-react',<CreditCard />,Payment credit card,Outline,hover:scale-105 transition-transform
+49,Commerce,dollar-sign,money price currency cost,Lucide,import { DollarSign } from 'lucide-react',<DollarSign />,Price money currency,Outline,hover:scale-110 transition-transform
+50,Commerce,tag,label price discount sale,Lucide,import { Tag } from 'lucide-react',<Tag />,Price tag label,Outline,hover:scale-110 hover:-rotate-12 transition-transform
+51,Commerce,gift,present reward bonus offer,Lucide,import { Gift } from 'lucide-react',<Gift />,Gift reward offer,Outline,hover:scale-110 hover:animate-wiggle transition-transform
+52,Commerce,percent,discount sale offer promo,Lucide,import { Percent } from 'lucide-react',<Percent />,Discount percentage sale,Outline,animate-pulse hover:scale-110 transition-transform
+53,Data,bar-chart,analytics statistics graph metrics,Lucide,import { BarChart } from 'lucide-react',<BarChart />,Bar chart analytics,Outline,hover:scale-105 transition-transform
+54,Data,pie-chart,statistics distribution breakdown,Lucide,import { PieChart } from 'lucide-react',<PieChart />,Pie chart distribution,Outline,hover:scale-105 transition-transform
+55,Data,trending-up,growth increase positive trend,Lucide,import { TrendingUp } from 'lucide-react',<TrendingUp />,Growth trend positive,Outline,hover:translate-x-1 hover:-translate-y-1 transition-transform
+56,Data,trending-down,decline decrease negative trend,Lucide,import { TrendingDown } from 'lucide-react',<TrendingDown />,Decline trend negative,Outline,hover:translate-x-1 hover:translate-y-1 transition-transform
+57,Data,activity,pulse heartbeat monitor live,Lucide,import { Activity } from 'lucide-react',<Activity />,Activity monitor pulse,Outline,animate-pulse
+58,Data,database,storage server data backend,Lucide,import { Database } from 'lucide-react',<Database />,Database storage,Outline,hover:scale-105 transition-transform
+59,Files,file,document page paper doc,Lucide,import { File } from 'lucide-react',<File />,File document,Outline,hover:scale-105 transition-transform
+60,Files,file-text,document text page article,Lucide,import { FileText } from 'lucide-react',<FileText />,Text document article,Outline,hover:scale-105 transition-transform
+61,Files,folder,directory organize group files,Lucide,import { Folder } from 'lucide-react',<Folder />,Folder directory,Outline,hover:scale-105 transition-transform
+62,Files,folder-open,expanded browse files view,Lucide,import { FolderOpen } from 'lucide-react',<FolderOpen />,Open folder browse,Outline,hover:scale-105 transition-transform
+63,Files,paperclip,attachment attach file link,Lucide,import { Paperclip } from 'lucide-react',<Paperclip />,Attachment paperclip,Outline,hover:rotate-12 transition-transform
+64,Files,link,url hyperlink chain connect,Lucide,import { Link } from 'lucide-react',<Link />,Link URL hyperlink,Outline,hover:scale-105 transition-transform
+65,Files,clipboard,paste copy buffer notes,Lucide,import { Clipboard } from 'lucide-react',<Clipboard />,Clipboard paste,Outline,hover:scale-105 active:scale-95 transition-transform
+66,Layout,grid,tiles gallery layout dashboard,Lucide,import { Grid } from 'lucide-react',<Grid />,Grid layout gallery,Outline,hover:scale-105 transition-transform
+67,Layout,list,rows table lines items,Lucide,import { List } from 'lucide-react',<List />,List view rows,Outline,hover:scale-105 transition-transform
+68,Layout,columns,layout split dual sidebar,Lucide,import { Columns } from 'lucide-react',<Columns />,Column layout split,Outline,hover:scale-105 transition-transform
+69,Layout,maximize,fullscreen expand enlarge zoom,Lucide,import { Maximize } from 'lucide-react',<Maximize />,Fullscreen maximize,Outline,hover:scale-110 transition-transform
+70,Layout,minimize,reduce shrink collapse exit,Lucide,import { Minimize } from 'lucide-react',<Minimize />,Minimize reduce,Outline,hover:scale-90 transition-transform
+71,Layout,sidebar,panel drawer navigation menu,Lucide,import { Sidebar } from 'lucide-react',<Sidebar />,Sidebar panel,Outline,hover:scale-105 transition-transform
+72,Social,heart,like love favorite wishlist,Lucide,import { Heart } from 'lucide-react',<Heart />,Like favorite love,Outline,hover:scale-125 active:scale-110 data-[liked=true]:animate-ping-once transition-transform
+73,Social,star,rating review favorite bookmark,Lucide,import { Star } from 'lucide-react',<Star />,Star rating favorite,Outline,hover:scale-125 hover:rotate-12 transition-transform
+74,Social,thumbs-up,like approve agree positive,Lucide,import { ThumbsUp } from 'lucide-react',<ThumbsUp />,Like approve thumb,Outline,hover:scale-110 hover:-rotate-12 transition-transform
+75,Social,thumbs-down,dislike disapprove disagree negative,Lucide,import { ThumbsDown } from 'lucide-react',<ThumbsDown />,Dislike disapprove,Outline,hover:scale-110 hover:rotate-12 transition-transform
+76,Social,bookmark,save later favorite mark,Lucide,import { Bookmark } from 'lucide-react',<Bookmark />,Bookmark save,Outline,hover:scale-110 hover:-translate-y-1 transition-transform
+77,Social,flag,report mark important highlight,Lucide,import { Flag } from 'lucide-react',<Flag />,Flag report,Outline,hover:scale-110 transition-transform
+78,Device,smartphone,mobile phone device touch,Lucide,import { Smartphone } from 'lucide-react',<Smartphone />,Mobile smartphone,Outline,hover:scale-105 transition-transform
+79,Device,tablet,ipad device touch screen,Lucide,import { Tablet } from 'lucide-react',<Tablet />,Tablet device,Outline,hover:scale-105 transition-transform
+80,Device,monitor,desktop screen computer display,Lucide,import { Monitor } from 'lucide-react',<Monitor />,Desktop monitor,Outline,hover:scale-105 transition-transform
+81,Device,laptop,notebook computer portable device,Lucide,import { Laptop } from 'lucide-react',<Laptop />,Laptop computer,Outline,hover:scale-105 transition-transform
+82,Device,printer,print document output paper,Lucide,import { Printer } from 'lucide-react',<Printer />,Printer print,Outline,hover:scale-105 transition-transform
+83,Security,lock,secure password protected private,Lucide,import { Lock } from 'lucide-react',<Lock />,Lock secure,Outline,hover:scale-110 transition-transform
+84,Security,unlock,open access unsecure public,Lucide,import { Unlock } from 'lucide-react',<Unlock />,Unlock open,Outline,hover:scale-110 transition-transform
+85,Security,shield,protection security safe guard,Lucide,import { Shield } from 'lucide-react',<Shield />,Shield protection,Outline,hover:scale-110 transition-transform
+86,Security,key,password access unlock login,Lucide,import { Key } from 'lucide-react',<Key />,Key password,Outline,hover:rotate-12 transition-transform
+87,Security,eye,view show visible password,Lucide,import { Eye } from 'lucide-react',<Eye />,Show password view,Outline,hover:scale-110 transition-transform
+88,Security,eye-off,hide invisible password hidden,Lucide,import { EyeOff } from 'lucide-react',<EyeOff />,Hide password,Outline,hover:scale-110 transition-transform
+89,Location,map-pin,location marker place address,Lucide,import { MapPin } from 'lucide-react',<MapPin />,Location pin marker,Outline,hover:scale-110 animate-bounce-subtle transition-transform
+90,Location,map,directions navigate geography location,Lucide,import { Map } from 'lucide-react',<Map />,Map directions,Outline,hover:scale-105 transition-transform
+91,Location,navigation,compass direction pointer arrow,Lucide,import { Navigation } from 'lucide-react',<Navigation />,Navigation compass,Outline,hover:scale-110 hover:-rotate-45 transition-transform
+92,Location,globe,world international global web,Lucide,import { Globe } from 'lucide-react',<Globe />,Globe world,Outline,hover:animate-spin-slow transition-transform
+93,Time,calendar,date schedule event appointment,Lucide,import { Calendar } from 'lucide-react',<Calendar />,Calendar date,Outline,hover:scale-105 transition-transform
+94,Time,refresh-cw,reload sync update refresh,Lucide,import { RefreshCw } from 'lucide-react',<RefreshCw />,Refresh reload,Outline,hover:rotate-180 data-[loading=true]:animate-spin transition-transform duration-500
+95,Time,rotate-ccw,undo back revert history,Lucide,import { RotateCcw } from 'lucide-react',<RotateCcw />,Undo revert,Outline,hover:-rotate-45 transition-transform
+96,Time,rotate-cw,redo forward repeat history,Lucide,import { RotateCw } from 'lucide-react',<RotateCw />,Redo forward,Outline,hover:rotate-45 transition-transform
+97,Development,code,develop programming syntax html,Lucide,import { Code } from 'lucide-react',<Code />,Code development,Outline,hover:scale-105 transition-transform
+98,Development,terminal,console cli command shell,Lucide,import { Terminal } from 'lucide-react',<Terminal />,Terminal console,Outline,hover:scale-105 transition-transform
+99,Development,git-branch,version control branch merge,Lucide,import { GitBranch } from 'lucide-react',<GitBranch />,Git branch,Outline,hover:scale-105 transition-transform
+100,Development,github,repository code open source,Lucide,import { Github } from 'lucide-react',<Github />,GitHub repository,Outline,hover:scale-110 hover:rotate-12 transition-transform
+101,Fintech,wallet,payment money finance digital,Lucide,import { Wallet } from 'lucide-react',<Wallet />,Digital wallet payment,Outline,hover:scale-110 transition-transform
+102,Fintech,landmark,bank institution financial building,Lucide,import { Landmark } from 'lucide-react',<Landmark />,Bank institution,Outline,hover:scale-105 transition-transform
+103,Fintech,chart-candlestick,trading stocks market financial,Lucide,import { CandlestickChart } from 'lucide-react',<CandlestickChart />,Stock trading chart,Outline,hover:scale-105 transition-transform
+104,Fintech,coins,money currency crypto tokens,Lucide,import { Coins } from 'lucide-react',<Coins />,Currency coins,Outline,hover:scale-110 hover:rotate-12 transition-transform
+105,Fintech,receipt,invoice bill transaction payment,Lucide,import { Receipt } from 'lucide-react',<Receipt />,Transaction receipt,Outline,hover:scale-105 transition-transform
+106,Fintech,piggy-bank,savings money finance deposit,Lucide,import { PiggyBank } from 'lucide-react',<PiggyBank />,Savings piggy bank,Outline,hover:scale-110 hover:-rotate-6 transition-transform
+107,AI,bot,chatbot ai assistant robot,Lucide,import { Bot } from 'lucide-react',<Bot />,AI chatbot assistant,Outline,hover:scale-110 animate-pulse-subtle transition-transform
+108,AI,brain-circuit,ai neural network machine learning,Lucide,import { BrainCircuit } from 'lucide-react',<BrainCircuit />,AI neural network,Outline,hover:scale-110 animate-pulse-subtle transition-transform
+109,AI,sparkles,ai magic generate create,Lucide,import { Sparkles } from 'lucide-react',<Sparkles />,AI generation magic,Outline,hover:scale-125 animate-pulse transition-transform
+110,AI,wand-2,magic generate transform ai,Lucide,import { Wand2 } from 'lucide-react',<Wand2 />,Magic wand transform,Outline,hover:rotate-12 hover:scale-110 transition-transform
+111,AI,cpu,processor computing chip tech,Lucide,import { Cpu } from 'lucide-react',<Cpu />,CPU processor,Outline,hover:scale-105 data-[processing=true]:animate-pulse transition-transform
+112,AI,network,connections neural graph nodes,Lucide,import { Network } from 'lucide-react',<Network />,Network connections,Outline,hover:scale-105 transition-transform
+113,AI,message-square-bot,ai chat assistant conversation,Lucide,import { MessageSquareBot } from 'lucide-react',<MessageSquareBot />,AI chat message,Outline,hover:scale-110 data-[typing=true]:animate-pulse transition-transform
+114,AI,graduation-cap,learning training education ai,Lucide,import { GraduationCap } from 'lucide-react',<GraduationCap />,Learning education,Outline,hover:scale-110 hover:-translate-y-1 transition-transform
+115,Healthcare,heart-pulse,health vital medical heartbeat,Lucide,import { HeartPulse } from 'lucide-react',<HeartPulse />,Vital signs heartbeat,Outline,animate-pulse
+116,Healthcare,stethoscope,doctor medical diagnosis health,Lucide,import { Stethoscope } from 'lucide-react',<Stethoscope />,Medical stethoscope,Outline,hover:scale-105 transition-transform
+117,Healthcare,pill,medicine drug pharmacy health,Lucide,import { Pill } from 'lucide-react',<Pill />,Medicine pill,Outline,hover:scale-110 hover:rotate-12 transition-transform
+118,Healthcare,ambulance,emergency medical hospital vehicle,Lucide,import { Ambulance } from 'lucide-react',<Ambulance />,Emergency ambulance,Outline,data-[emergency=true]:animate-pulse hover:scale-105 transition-transform
+119,Healthcare,hospital,medical building clinic health,Lucide,import { Hospital } from 'lucide-react',<Hospital />,Hospital building,Outline,hover:scale-105 transition-transform
+120,Healthcare,thermometer,temperature fever health medical,Lucide,import { Thermometer } from 'lucide-react',<Thermometer />,Temperature thermometer,Outline,hover:scale-105 transition-transform
+121,Healthcare,syringe,injection vaccine medical health,Lucide,import { Syringe } from 'lucide-react',<Syringe />,Medical syringe,Outline,hover:scale-105 transition-transform
+122,E-commerce,package,shipping delivery box product,Lucide,import { Package } from 'lucide-react',<Package />,Package shipping,Outline,hover:scale-110 hover:-rotate-6 transition-transform
+123,E-commerce,truck,delivery shipping transport logistics,Lucide,import { Truck } from 'lucide-react',<Truck />,Delivery truck,Outline,group-hover:translate-x-2 transition-transform
+124,E-commerce,store,shop retail business storefront,Lucide,import { Store } from 'lucide-react',<Store />,Store storefront,Outline,hover:scale-105 transition-transform
+125,Developer,code-2,programming development syntax brackets,Lucide,import { Code2 } from 'lucide-react',<Code2 />,Code brackets,Outline,hover:scale-105 transition-transform
+126,Developer,server,hosting backend infrastructure cloud,Lucide,import { Server } from 'lucide-react',<Server />,Server hosting,Outline,hover:scale-105 data-[active=true]:animate-pulse transition-transform
+127,Developer,api,integration endpoint connection interface,Lucide,import { PlugZap } from 'lucide-react',<PlugZap />,API connection,Outline,hover:scale-110 data-[connected=true]:animate-pulse transition-transform
+128,Developer,bug,error debug issue problem,Lucide,import { Bug } from 'lucide-react',<Bug />,Bug error,Outline,hover:scale-110 hover:animate-wiggle transition-transform
+129,Developer,test-tube,testing experiment lab quality,Lucide,import { TestTube } from 'lucide-react',<TestTube />,Testing test tube,Outline,hover:scale-105 hover:rotate-12 transition-transform
+130,Social,at-sign,mention email handle username,Lucide,import { AtSign } from 'lucide-react',<AtSign />,At mention,Outline,hover:scale-110 hover:rotate-12 transition-transform
+131,Social,share-2,distribute send social share,Lucide,import { Share2 } from 'lucide-react',<Share2 />,Share distribute,Outline,hover:scale-110 transition-transform
