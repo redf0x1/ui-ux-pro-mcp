@@ -5,6 +5,42 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-18
+
+### Added
+
+**New Features:**
+- Added 3 new icon libraries: Heroicons, Phosphor Icons, Tabler Icons (+40 icons)
+- Added React animation guidelines: Framer Motion (8 entries), React Spring (5 entries)
+- Added AI-Native UI styles: Agentic Interface, Streaming UI, Spatial UI 3D, Voice UI
+- Added CSS Scroll-Driven Animations guidelines
+- Added View Transitions API guidelines for ux-guidelines.csv and nextjs.csv
+
+**2026 Framework Updates:**
+- React 19.2: Added React Compiler v1.0, Activity component, useEffectEvent hook
+- Next.js 16: Added Turbopack stable, 'use cache' directive, React Compiler integration
+- Tailwind v4: Added 10 new entries for CSS-first config, container queries, oklch colors
+
+**New Color Palettes:**
+- AI Code Assistant, AI Image Generator, AI Chatbot LLM
+- AI Voice Platform, AI Analytics Dashboard, AI Automation Agent
+- AI Video Generator, Spatial Computing/VisionOS
+
+**New Product Types:**
+- Kids/Baby/Parenting App
+- Manufacturing/Industrial Platform
+- Crowdfunding/Fundraising Platform
+
+### Fixed
+- Updated 19 Tailwind v4-beta URLs to stable docs
+- Updated React 19 docs URLs from blog to reference docs
+- Fixed Next.js version references (14+ → 15+)
+
+### Changed
+- +99 new entries across all data files
+- +20 URL/reference fixes
+- Total entries now: 1410+
+
 ## [1.0.1] - 2026-01-18
 
 ### Changed

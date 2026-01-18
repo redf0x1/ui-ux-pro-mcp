@@ -7,7 +7,7 @@
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![GitHub stars](https://img.shields.io/github/stars/redf0x1/ui-ux-pro-mcp?style=flat-square)](https://github.com/redf0x1/ui-ux-pro-mcp/stargazers)
 
-> **AI-powered UI/UX design intelligence** — Instantly access 1340+ curated design resources through natural language search.
+> **AI-powered UI/UX design intelligence** — Instantly access 1410+ curated design resources through natural language search.
 
 ---
 
@@ -15,7 +15,7 @@
 
 | Feature | Details |
 |---------|---------|
-| 📚 **1340+ Documents** | Curated design knowledge across 11 domains |
+| 📚 **1410+ Documents** | Curated design knowledge across 11 domains |
 | 🔧 **11 Tools** | Specialized search for styles, colors, typography, charts, icons, and more |
 | ⚡ **BM25 Ranking** | Fast, relevant search results using industry-standard text ranking |
 | 🔗 **Universal** | Works with VS Code, Claude Desktop, Cursor, and any MCP-compatible client |
