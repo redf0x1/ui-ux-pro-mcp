@@ -175,7 +175,7 @@ Add to your Claude Desktop configuration:
 | `search_charts` | 35 | Chart types with implementation recommendations for dashboards |
 | `search_ux_guidelines` | 115 | UX best practices, do's and don'ts, accessibility (WCAG) |
 | `search_icons` | 131 | Curated Lucide icons with import codes and use cases |
-| `search_landing` | 40 | Landing patterns, Bento Grids (Config & Maps), Responsive Strategy |
+| `search_landing` | 49 | Landing patterns, Bento Grids (Config & Maps), Responsive Strategy |
 | `search_products` | 114 | Product type design recommendations per industry |
 | `search_prompts` | 30 | AI prompt templates with CSS snippets and implementation checklists |
 | `search_stack` | 660 | Framework-specific guidelines (React, Vue, Next.js, Flutter, etc.) |

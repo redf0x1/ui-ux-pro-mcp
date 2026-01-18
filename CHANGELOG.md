@@ -5,6 +5,29 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.5] - 2026-01-18
+
+### Added - New Landing Patterns
+- **Row 47: Tab Navigation Component** - ARIA-compliant tabs with animated indicator, keyboard navigation
+- **Row 48: Analytics Dashboard Layout** - KPI cards grid, chart widgets, responsive design
+- **Row 49: Mega Menu Navigation** - Multi-column dropdown, keyboard focus management
+
+### Enhanced - 2026 Best Practices Audit
+- **Row 45 (Slider/Carousel)**: Embla/Swiper patterns, CSS scroll-snap, RTL support, prefers-reduced-motion, ARIA accessibility
+- **Rows 8, 14 (Pricing)**: Framer Motion toggle animation, badge pop effect, price counter animation
+- **Rows 2, 33 (Testimonials)**: Video testimonials, masonry layout, infinite marquee, lazy load avatars, platform badges
+- **Rows 6, 13, 35 (Comparison Tables)**: Sticky headers with scroll shadow, feature tooltips, mobile horizontal scroll
+- **Rows 9, 39 (Video Heroes)**: Lazy video with IntersectionObserver, prefers-reduced-motion fallback, poster optimization
+
+### Research Sources
+- Perplexity 2026 research: ARIA tabs (WAI-ARIA), Embla/Swiper carousels, Framer Motion pricing, Tremor dashboards, Stripe/Apple mega menus
+
+### Summary
+- Comprehensive audit of all 49 landing patterns
+- 3 new critical patterns added (Tab, Dashboard, Mega Menu)
+- 10 existing patterns enhanced with 2026 techniques
+- Coverage: ARIA, prefers-reduced-motion, IntersectionObserver, CSS scroll-snap, RTL, keyboard navigation
+
 ## [1.1.4] - 2026-01-18
 
 ### Enhanced
