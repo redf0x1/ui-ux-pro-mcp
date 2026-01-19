@@ -1,6 +1,14 @@
 /**
  * UI/UX Pro Max MCP Tools
  * Export all tool handlers for MCP server integration
+ * 
+ * Consolidated 6-tool architecture:
+ * 1. getDesignSystem - Complete design system generator
+ * 2. searchAll - Unified search across all domains
+ * 3. searchStyles - Visual design (styles, colors, typography, prompts)
+ * 4. searchComponents - UI components (icons, charts)
+ * 5. searchPatterns - Design patterns (landing, ux, products)
+ * 6. searchStack - Framework-specific guidelines
  */
 
 export {
@@ -9,8 +17,15 @@ export {
   isInitialized,
   getDataStats,
 
-  // Search Tools
+  // Consolidated Search Tools (6 tools)
+  getDesignSystem,
+  searchAll,
   searchStyles,
+  searchComponents,
+  searchPatterns,
+  searchStack,
+
+  // Legacy individual search functions (for backward compatibility)
   searchColors,
   searchTypography,
   searchCharts,
@@ -18,10 +33,7 @@ export {
   searchIcons,
   searchLanding,
   searchProducts,
-  searchAll,
-
-  // Design System Generator
-  getDesignSystem,
+  searchPrompts,
 
   // Domain Detection
   detectDomain,

@@ -24,20 +24,19 @@ const isStdioMode = process.argv.includes('--stdio') || (!process.env.PORT && !p
 import {
   initializeIndexes,
   searchStyles,
-  searchColors,
-  searchTypography,
-  searchCharts,
-  searchUXGuidelines,
-  searchIcons,
-  searchLanding,
-  searchProducts,
-  searchPrompts,
+  searchComponents,
+  searchPatterns,
   searchStack,
-  listAvailableStacks,
   searchAll,
   getDataStats,
   getDesignSystem
 } from './tools/handlers.js';
+
+// Available stacks for search_stack tool
+const AVAILABLE_STACKS = [
+  'flutter', 'jetpack-compose', 'html-tailwind', 'nextjs', 'nuxt-ui',
+  'nuxtjs', 'react-native', 'react', 'shadcn', 'svelte', 'swiftui', 'vue'
+] as const;
 
 // ============================================================================
 // LOGGING UTILITY (suppressed in stdio mode)
@@ -73,270 +72,145 @@ const SESSION_CLEANUP_INTERVAL_MS = 60 * 1000; // Check every minute
 // ============================================================================
 
 const TOOLS = [
+  // 1. Complete Design System Generator
   {
-    name: 'search_ui_styles',
-    description: 'Search 70+ UI styles with implementation-ready colors, effects, and CSS guidance.\n\nWHEN TO USE: Visual aesthetics, design systems, specific style implementation (glassmorphism, brutalism, etc.).\n\nQUERY TIPS: Combine style name with mood or industry. Use descriptive terms like "dark mode", "minimal", "playful".\n\nRETURNS: Style Category, Type, Keywords, Primary/Secondary Colors (hex), Effects & Animation, Best For, Framework Compatibility.\n\nEXAMPLES: "glassmorphism dark mode", "minimalist saas dashboard", "brutalist portfolio"',
+    name: 'get_design_system',
+    description: `Generate a complete design system by combining styles, colors, typography, and layout patterns.
+
+WHEN TO USE: Starting a new project, need cohesive design foundation, want all design elements in one call.
+
+QUERY TIPS: Specify product type and optionally style preference or mode.
+
+RETURNS: Integrated design system with colors (including Tailwind config), typography (with CSS imports), UI style (with CSS code), and landing layout (with CSS grid).
+
+EXAMPLES: "fintech dark glassmorphism", "saas minimal clean", "e-commerce luxury", "startup landing"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for UI styles'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
+        query: { type: 'string', description: 'Product type or design description (e.g., "fintech dark", "saas minimal", "e-commerce luxury")' },
+        style: { type: 'string', description: 'Specific style preference (e.g., "glassmorphism", "minimalism", "brutalism")' },
+        mode: { type: 'string', enum: ['light', 'dark'], description: 'Color mode preference' },
+        max_results: { type: 'number', default: 1, minimum: 1, maximum: 5, description: 'Maximum items per domain' }
       },
       required: ['query']
     }
   },
-  {
-    name: 'search_colors',
-    description: 'Search 100+ color palettes with hex codes for industries and design contexts.\n\nWHEN TO USE: Brand colors, UI themes, industry-specific schemes, dark/light mode palettes.\n\nQUERY TIPS: Specify industry (fintech, healthcare) or mood (calm, energetic). Include context like "dark mode".\n\nRETURNS: Product Type, Keywords, Primary/Secondary/CTA/Background/Text hex codes, Usage Notes.\n\nEXAMPLES: "fintech crypto dark", "healthcare calm accessible", "e-commerce luxury gold"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for color palettes'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
-  {
-    name: 'search_typography',
-    description: 'Search 70+ font pairings with Google Fonts imports and Tailwind configurations.\n\nWHEN TO USE: Heading/body font combos, brand typography, readability optimization.\n\nQUERY TIPS: Describe mood (modern, elegant), category (sans-serif), or use case (developer docs).\n\nRETURNS: Pairing Name, Heading Font, Body Font, Keywords, Google Fonts URL, CSS Import, Tailwind Config.\n\nEXAMPLES: "modern tech startup", "elegant luxury serif", "developer documentation mono"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for typography and font pairings'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
-  {
-    name: 'search_charts',
-    description: 'Search 25+ chart types with implementation recommendations for data visualization.\n\nWHEN TO USE: Dashboard charts, data presentation, selecting appropriate chart type.\n\nQUERY TIPS: Describe data type (time series, comparison) or visualization goal (trends, distribution).\n\nRETURNS: Data Type, Best Chart Type, Secondary Options, Color Guidance, Library Recommendation.\n\nEXAMPLES: "time series price data", "category comparison bar", "real-time streaming dashboard"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for chart types and data visualization'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
-  {
-    name: 'search_ux_guidelines',
-    description: 'Search 100+ UX best practices with do\'s, don\'ts, and code examples.\n\nWHEN TO USE: Accessibility compliance, interaction patterns, platform-specific guidelines.\n\nQUERY TIPS: Be specific about UX aspect (forms, navigation) or platform (mobile, web).\n\nRETURNS: Category, Issue, Platform, Do/Don\'t practices, Code Good/Bad examples, Severity.\n\nEXAMPLES: "form validation errors", "mobile navigation patterns", "accessibility screen reader"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for UX guidelines and best practices'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
-  {
-    name: 'search_icons',
-    description: 'Search 100+ curated Lucide icons with import codes and use cases.\n\nWHEN TO USE: Finding icons for UI elements, consistent icon selection.\n\nQUERY TIPS: Describe action or concept (settings, user) or context (navigation, status).\n\nRETURNS: Category, Icon Name, Keywords, Import Code, JSX Usage, Best For.\n\nEXAMPLES: "user profile settings", "chart analytics", "notification alert warning"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for icons'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
-  {
-    name: 'search_landing',
-    description: 'Search 40+ landing page patterns with section structures and conversion tips.\n\nWHEN TO USE: Page layout planning, section ordering, CTA placement, conversion optimization.\n\nQUERY TIPS: Specify page type (hero, pricing) or goal (lead capture, product showcase).\n\nRETURNS: Pattern Name, Keywords, Section Order, CTA Placement, Color Strategy, Conversion Tips.\n\nEXAMPLES: "hero with testimonials", "pricing comparison table", "lead capture minimal"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for landing page patterns'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
-  {
-    name: 'search_products',
-    description: 'Search 100+ product type design recommendations with style and layout guidance.\n\nWHEN TO USE: Initial project setup, understanding design conventions for specific product types.\n\nQUERY TIPS: Name the product category (SaaS, e-commerce, fintech) or describe product purpose.\n\nRETURNS: Product Type, Keywords, Primary/Secondary Style, Landing Pattern, Dashboard Style, Color Focus.\n\nEXAMPLES: "fintech crypto trading", "saas b2b dashboard", "e-commerce fashion luxury"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for product design recommendations'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
-      },
-      required: ['query']
-    }
-  },
+
+  // 2. Smart Unified Search
   {
     name: 'search_all',
-    description: 'Unified search across ALL design domains with intelligent auto-detection. Searches: styles, colors, typography, charts, icons, ux-guidelines, landing, products, prompts.\n\nWHEN TO USE: DEFAULT tool for broad queries. Use when unsure which specific tool, or need multi-domain results.\n\nQUERY TIPS: Use natural language describing your design goal. System auto-detects relevant domains.\n\nRETURNS: Results grouped by domain with relevance scores. Each domain returns its specific fields.\n\nEXAMPLES: "modern fintech dashboard dark", "e-commerce checkout ux", "startup landing complete"',
+    description: `Unified search across ALL design domains with intelligent auto-detection. Searches: styles, colors, typography, charts, icons, ux-guidelines, landing, products, prompts.
+
+WHEN TO USE: DEFAULT tool for broad queries. Use when unsure which specific tool, or need multi-domain results.
+
+QUERY TIPS: Use natural language describing your design goal. System auto-detects relevant domains.
+
+RETURNS: Results grouped by domain with relevance scores. Each domain returns its specific fields.
+
+EXAMPLES: "modern fintech dashboard dark", "e-commerce checkout ux", "startup landing complete"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: {
-          type: 'string',
-          description: 'Search query across all design domains'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results per domain',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
+        query: { type: 'string', description: 'Search query across all design domains' },
+        max_results: { type: 'number', default: 3, minimum: 1, maximum: 50, description: 'Maximum number of results per domain' }
       },
       required: ['query']
     }
   },
+
+  // 3. Visual Design Search (merged: styles, colors, typography, prompts)
   {
-    name: 'search_prompts',
-    description: 'Search AI prompt templates with CSS keywords, implementation checklists, and design tokens.\n\nWHEN TO USE: AI-assisted design workflows, style-specific implementation, design system setup.\n\nQUERY TIPS: Name the style (glassmorphism) or aesthetic goal (futuristic, organic).\n\nRETURNS: Style Category, AI Prompt Keywords, CSS Keywords, Implementation Checklist, Design Tokens.\n\nEXAMPLES: "glassmorphism implementation", "dark mode design tokens", "minimalist design system"',
+    name: 'search_styles',
+    description: `Search visual design elements: UI styles (70+), color palettes (100+), typography pairings (70+), and AI prompts (40+).
+
+WHEN TO USE: Visual aesthetics, color schemes, font choices, CSS effects, design tokens.
+
+DOMAIN FILTER (optional): style | color | typography | prompt
+
+RETURNS: Style CSS code, color hex values with Tailwind config, font pairings with Google Fonts imports.
+
+EXAMPLES: "glassmorphism dark mode", "fintech blue palette", "modern sans-serif pairing"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: {
-          type: 'string',
-          description: 'Search query for AI prompts (e.g., "minimalism", "glassmorphism", "dark mode")'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
+        query: { type: 'string', description: 'Search query for visual design' },
+        domain: { type: 'string', enum: ['style', 'color', 'typography', 'prompt'], description: 'Filter to specific domain' },
+        max_results: { type: 'number', default: 5, minimum: 1, maximum: 50, description: 'Maximum number of results to return' }
       },
       required: ['query']
     }
   },
+
+  // 4. UI Components Search (merged: icons, charts)
+  {
+    name: 'search_components',
+    description: `Search UI components: Lucide icons (176+) and chart types (37+) for data visualization.
+
+WHEN TO USE: Finding icons for UI, selecting chart types for data.
+
+TYPE FILTER (optional): icon | chart
+
+RETURNS: Icon import codes with JSX, chart recommendations with library suggestions.
+
+EXAMPLES: "user profile settings icon", "time series data chart", "analytics dashboard"`,
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        query: { type: 'string', description: 'Search query for UI components' },
+        type: { type: 'string', enum: ['icon', 'chart'], description: 'Filter to icons or charts' },
+        max_results: { type: 'number', default: 5, minimum: 1, maximum: 50, description: 'Maximum number of results to return' }
+      },
+      required: ['query']
+    }
+  },
+
+  // 5. Design Patterns Search (merged: landing, ux, products)
+  {
+    name: 'search_patterns',
+    description: `Search design patterns: landing page layouts (60+), UX guidelines (130+), product type recommendations (117+).
+
+WHEN TO USE: Page layouts, UX best practices, accessibility, navigation patterns.
+
+TYPE FILTER (optional): layout | ux | product
+
+RETURNS: Section structures, do/don't practices, conversion tips, code examples.
+
+EXAMPLES: "hero section with CTA", "form validation best practices", "e-commerce product page"`,
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        query: { type: 'string', description: 'Search query for design patterns' },
+        type: { type: 'string', enum: ['layout', 'ux', 'product'], description: 'Filter to layout, ux, or product' },
+        max_results: { type: 'number', default: 5, minimum: 1, maximum: 50, description: 'Maximum number of results to return' }
+      },
+      required: ['query']
+    }
+  },
+
+  // 6. Framework Stack Search
   {
     name: 'search_stack',
-    description: 'Search framework-specific guidelines for: flutter, html-tailwind, nextjs, nuxt-ui, nuxtjs, react-native, react, shadcn, svelte, swiftui, vue.\n\nWHEN TO USE: Framework-specific patterns, component best practices, state management.\n\nQUERY TIPS: Include framework name AND topic (e.g., "react hooks forms", "nextjs api routes").\n\nRETURNS: Category, Guideline, Description, Do/Don\'t, Code Examples, Severity, Docs URL.\n\nEXAMPLES: "react state management", "nextjs server components", "vue composition api"',
+    description: `Search framework-specific guidelines for: flutter, jetpack-compose, html-tailwind, nextjs, nuxt-ui, nuxtjs, react-native, react, shadcn, svelte, swiftui, vue.
+
+WHEN TO USE: Framework-specific patterns, component best practices, state management.
+
+QUERY TIPS: Include framework name AND topic.
+
+RETURNS: Category, Guideline, Description, Do/Don't, Code Examples, Severity, Docs URL.
+
+EXAMPLES: "react state management", "flutter animation", "swiftui navigation"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
         stack_name: {
           type: 'string',
-          description: 'Framework/stack name (e.g., "react", "vue", "nextjs", "flutter", "swiftui")',
-          enum: ['flutter', 'html-tailwind', 'nextjs', 'nuxt-ui', 'nuxtjs', 'react-native', 'react', 'shadcn', 'svelte', 'swiftui', 'vue']
+          enum: AVAILABLE_STACKS,
+          description: 'Framework/stack name'
         },
-        query: {
-          type: 'string',
-          description: 'Search query for guidelines (e.g., "state management", "hooks", "components")'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum number of results to return',
-          default: 3,
-          minimum: 1,
-          maximum: 50
-        }
+        query: { type: 'string', description: 'Search query for guidelines' },
+        max_results: { type: 'number', default: 3, minimum: 1, maximum: 50, description: 'Maximum number of results to return' }
       },
       required: ['stack_name', 'query']
-    }
-  },
-  {
-    name: 'get_design_system',
-    description: 'Generate a complete design system by combining styles, colors, typography, and layout patterns.\n\nWHEN TO USE: Starting a new project, need cohesive design foundation, want all design elements in one call.\n\nQUERY TIPS: Specify product type and optionally style preference or mode.\n\nRETURNS: Integrated design system with colors (including Tailwind config), typography (with CSS imports), UI style (with CSS code), and landing layout (with CSS grid).\n\nEXAMPLES: "fintech dark glassmorphism", "saas minimal clean", "e-commerce luxury", "startup landing"',
-    inputSchema: {
-      type: 'object' as const,
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Product type or design description (e.g., "fintech dark", "saas minimal", "e-commerce luxury")'
-        },
-        style: {
-          type: 'string',
-          description: 'Specific style preference (e.g., "glassmorphism", "minimalism", "brutalism")'
-        },
-        mode: {
-          type: 'string',
-          enum: ['light', 'dark'],
-          description: 'Color mode preference'
-        },
-        max_results: {
-          type: 'number',
-          description: 'Maximum items per domain',
-          default: 1,
-          minimum: 1,
-          maximum: 5
-        }
-      },
-      required: ['query']
     }
   }
 ];
@@ -351,6 +225,8 @@ interface ToolArguments {
   stack_name?: string;
   style?: string;
   mode?: 'light' | 'dark';
+  domain?: 'style' | 'color' | 'typography' | 'prompt';  // for search_styles
+  type?: 'icon' | 'chart' | 'layout' | 'ux' | 'product';  // for search_components and search_patterns
 }
 
 function isSearchError(result: unknown): result is { error: string } {
@@ -358,46 +234,40 @@ function isSearchError(result: unknown): result is { error: string } {
 }
 
 function handleToolCall(name: string, args: ToolArguments): CallToolResult {
-  const { query, max_results, stack_name } = args;
+  const { query, max_results, stack_name, domain, type } = args;
   let results: unknown;
 
   switch (name) {
-    case 'search_ui_styles':
-      results = searchStyles(query, max_results ?? 3);
-      break;
-    case 'search_colors':
-      results = searchColors(query, max_results ?? 3);
-      break;
-    case 'search_typography':
-      results = searchTypography(query, max_results ?? 3);
-      break;
-    case 'search_charts':
-      results = searchCharts(query, max_results ?? 3);
-      break;
-    case 'search_ux_guidelines':
-      results = searchUXGuidelines(query, max_results ?? 3);
-      break;
-    case 'search_icons':
-      results = searchIcons(query, max_results ?? 3);
-      break;
-    case 'search_landing':
-      results = searchLanding(query, max_results ?? 3);
-      break;
-    case 'search_products':
-      results = searchProducts(query, max_results ?? 3);
-      break;
-    case 'search_all':
-      results = searchAll(query, max_results ?? 2);
-      break;
-    case 'search_prompts':
-      results = searchPrompts(query, max_results ?? 3);
-      break;
-    case 'search_stack':
-      results = searchStack(stack_name, query, max_results ?? 3);
-      break;
+    // 1. Design System Generator
     case 'get_design_system':
       results = getDesignSystem(query, args.style, args.mode, max_results ?? 1);
       break;
+
+    // 2. Unified Search
+    case 'search_all':
+      results = searchAll(query, max_results ?? 3);
+      break;
+
+    // 3. Visual Design (merged: styles, colors, typography, prompts)
+    case 'search_styles':
+      results = searchStyles(query, domain, max_results ?? 5);
+      break;
+
+    // 4. UI Components (merged: icons, charts)
+    case 'search_components':
+      results = searchComponents(query, type as 'icon' | 'chart' | undefined, max_results ?? 5);
+      break;
+
+    // 5. Design Patterns (merged: landing, ux, products)
+    case 'search_patterns':
+      results = searchPatterns(query, type as 'layout' | 'ux' | 'product' | undefined, max_results ?? 5);
+      break;
+
+    // 6. Framework Stack
+    case 'search_stack':
+      results = searchStack(stack_name, query, max_results ?? 3);
+      break;
+
     default:
       return {
         content: [{

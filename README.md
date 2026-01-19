@@ -16,7 +16,7 @@
 | Feature | Details |
 |---------|---------|
 | 📚 **1,700+ Documents** | Curated design knowledge across 11 domains |
-| 🔧 **11 Tools** | Specialized search for styles, colors, typography, charts, icons, and more |
+| 🔧 **6 Tools** | Consolidated search tools optimized for LLM performance |
 | ⚡ **BM25 Ranking** | Fast, relevant search results using industry-standard text ranking |
 | 🔗 **Universal** | Works with VS Code, Claude Desktop, Cursor, and any MCP-compatible client |
 | 🎯 **12 Frameworks** | Stack-specific guidelines for React, Vue, Next.js, Flutter, SwiftUI, Jetpack Compose, and more |
@@ -230,10 +230,10 @@ This server aggregates curated design intelligence from multiple domains:
 | Landing | `landing.csv` | 49 | Patterns, Bento Layout Maps, Responsive Strategy |
 | Products | `products.csv` | 114 | Industry design recommendations |
 | Prompts | `prompts.csv` | 39 | AI prompt templates |
-| Stacks | `stacks/*.csv` | 660 | Framework-specific guidelines (11 stacks) |
+| Stacks | `stacks/*.csv` | 766 | Framework-specific guidelines (12 stacks) |
 
 **Available Framework Stacks:**
-`flutter` · `html-tailwind` · `nextjs` · `nuxt-ui` · `nuxtjs` · `react-native` · `react` · `shadcn` · `svelte` · `swiftui` · `vue`
+`flutter` · `html-tailwind` · `jetpack-compose` · `nextjs` · `nuxt-ui` · `nuxtjs` · `react-native` · `react` · `shadcn` · `svelte` · `swiftui` · `vue`
 
 ---
 
@@ -399,10 +399,10 @@ curl -X POST http://localhost:3000/message \
 
 | Need | Best Tool |
 |------|----------|
-| Color palettes | `search_colors` |
-| UI components | `search_ui_styles` |
-| Best practices | `search_ux_guidelines` |
-| Icons | `search_icons` |
+| Color palettes | `search_styles` with `domain: "color"` |
+| UI components | `search_styles` with `domain: "style"` |
+| Best practices | `search_patterns` with `type: "ux"` |
+| Icons | `search_components` with `type: "icon"` |
 | Framework tips | `search_stack` |
 | Everything | `search_all` |
 

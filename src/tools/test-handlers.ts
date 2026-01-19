@@ -11,6 +11,7 @@ import {
   searchCharts,
   searchUXGuidelines,
   searchIcons,
+  searchComponents,
   searchLanding,
   searchProducts,
   searchAll,
@@ -92,6 +93,23 @@ const iconResults = getResults(searchIcons('menu navigation', 3));
 console.log(`   Found ${iconResults.length} results:`);
 iconResults.forEach((r: SearchResult, i: number) => {
   console.log(`   ${i + 1}. ${r.data['Icon Name']} (score: ${r.score.toFixed(3)})`);
+});
+
+// Test searchComponents - merged icons & charts search
+console.log('\n6b. Search Components (icons+charts): "data dashboard"');
+const compResults = getResults(searchComponents('data dashboard', undefined, 4));
+console.log(`   Found ${compResults.length} results:`);
+compResults.forEach((r: any, i: number) => {
+  const name = r.data['Icon Name'] || r.data['Best Chart Type'] || 'Unknown';
+  console.log(`   ${i + 1}. [${r._domain}] ${name} (score: ${r.score.toFixed(3)})`);
+});
+
+// Test searchComponents with type filter
+console.log('\n6c. Search Components (type: chart): "time series"');
+const chartOnlyResults = getResults(searchComponents('time series', 'chart', 3));
+console.log(`   Found ${chartOnlyResults.length} results:`);
+chartOnlyResults.forEach((r: any, i: number) => {
+  console.log(`   ${i + 1}. [${r._domain}] ${r.data['Best Chart Type']} (score: ${r.score.toFixed(3)})`);
 });
 
 // Test landing search

@@ -839,11 +839,12 @@ export interface SearchError {
 export type SearchResponse = SearchResult[] | SearchError;
 
 /**
- * Search UI styles (57 styles)
+ * Search UI styles only (57 styles)
  * @param query - Search query
  * @param maxResults - Maximum results to return (default: 3)
+ * @deprecated Use searchVisualDesign() for merged search across styles, colors, typography, prompts
  */
-export function searchStyles(query: unknown, maxResults: unknown = 3): SearchResponse {
+export function searchStylesOnly(query: unknown, maxResults: unknown = 3): SearchResponse {
   const validation = validateSearchInput(query, maxResults);
   if (!validation.valid) {
     return { error: validation.error! };
@@ -858,6 +859,103 @@ export function searchStyles(query: unknown, maxResults: unknown = 3): SearchRes
     data: r.document.data,
     score: r.score
   }));
+}
+
+/**
+ * Merged search for visual design: styles, colors, typography, prompts
+ * Combines 4 tools into 1 unified search
+ * @param query - Search query
+ * @param domainOrMaxResults - Optional: 'style' | 'color' | 'typography' | 'prompt' to filter by domain, OR number for maxResults (backward compat)
+ * @param maxResults - Maximum results to return (default: 5)
+ */
+export function searchStyles(
+  query: unknown,
+  domainOrMaxResults?: 'style' | 'color' | 'typography' | 'prompt' | number,
+  maxResults: unknown = 5
+): SearchResponse {
+  // Handle backward compatibility: if second arg is a number, it's maxResults
+  let domain: 'style' | 'color' | 'typography' | 'prompt' | undefined;
+  let effectiveMaxResults: unknown = maxResults;
+
+  if (typeof domainOrMaxResults === 'number') {
+    // Old call pattern: searchStyles(query, maxResults)
+    effectiveMaxResults = domainOrMaxResults;
+    domain = undefined;
+  } else if (typeof domainOrMaxResults === 'string') {
+    // New call pattern: searchStyles(query, domain, maxResults)
+    domain = domainOrMaxResults as 'style' | 'color' | 'typography' | 'prompt';
+  }
+
+  const validation = validateSearchInput(query, effectiveMaxResults);
+  if (!validation.valid) {
+    return { error: validation.error! };
+  }
+
+  // Validate domain if provided
+  if (domain && !['style', 'color', 'typography', 'prompt'].includes(domain)) {
+    return { error: `Invalid domain: "${domain}". Must be one of: style, color, typography, prompt` };
+  }
+
+  const results: SearchResult[] = [];
+
+  // Determine which domains to search
+  const searchDomains = domain
+    ? [domain]
+    : ['style', 'color', 'typography', 'prompt'] as const;
+
+  const resultsPerDomain = domain
+    ? validation.maxResults
+    : Math.max(2, Math.ceil(validation.maxResults / searchDomains.length));
+
+  for (const d of searchDomains) {
+    let domainResults: SearchResult[] = [];
+
+    switch (d) {
+      case 'style':
+        if (stylesIndex) {
+          domainResults = stylesIndex.search(validation.query, resultsPerDomain)
+            .map(r => ({
+              data: { ...r.document.data, _domain: 'style' },
+              score: r.score
+            }));
+        }
+        break;
+      case 'color':
+        if (colorsIndex) {
+          domainResults = colorsIndex.search(validation.query, resultsPerDomain)
+            .map(r => ({
+              data: { ...r.document.data, _domain: 'color' },
+              score: r.score
+            }));
+        }
+        break;
+      case 'typography':
+        if (typographyIndex) {
+          domainResults = typographyIndex.search(validation.query, resultsPerDomain)
+            .map(r => ({
+              data: { ...r.document.data, _domain: 'typography' },
+              score: r.score
+            }));
+        }
+        break;
+      case 'prompt':
+        if (promptsIndex) {
+          domainResults = promptsIndex.search(validation.query, resultsPerDomain)
+            .map(r => ({
+              data: { ...r.document.data, _domain: 'prompt' },
+              score: r.score
+            }));
+        }
+        break;
+    }
+
+    results.push(...domainResults);
+  }
+
+  // Sort by score, limit to maxResults
+  return results
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .slice(0, validation.maxResults);
 }
 
 /**
@@ -930,6 +1028,7 @@ export function searchCharts(query: unknown, maxResults: unknown = 3): SearchRes
  * Search UX guidelines (98 guidelines)
  * @param query - Search query
  * @param maxResults - Maximum results to return (default: 3)
+ * @deprecated Use searchPatterns() for merged search across landing, UX guidelines, products
  */
 export function searchUXGuidelines(query: unknown, maxResults: unknown = 3): SearchResponse {
   const validation = validateSearchInput(query, maxResults);
@@ -971,9 +1070,138 @@ export function searchIcons(query: unknown, maxResults: unknown = 3): SearchResp
 }
 
 /**
+ * Merged search for UI components: icons and charts
+ * Combines search across icons (100 items) and charts (24 types) with optional type filtering
+ * @param query - Search query
+ * @param type - Optional filter: 'icon' or 'chart'. If omitted, searches both
+ * @param maxResults - Maximum results to return (default: 5)
+ */
+export function searchComponents(
+  query: unknown,
+  type?: 'icon' | 'chart',
+  maxResults: unknown = 5
+): SearchResponse {
+  const validation = validateSearchInput(query, maxResults);
+  if (!validation.valid) {
+    return { error: validation.error! };
+  }
+
+  // Validate type parameter if provided
+  if (type !== undefined && type !== 'icon' && type !== 'chart') {
+    return { error: `Invalid type: ${type}. Must be 'icon' or 'chart'` };
+  }
+
+  const results: Array<{ data: any; score: number; _domain: string }> = [];
+  
+  const searchTypes = type ? [type] : ['icon', 'chart'];
+  const resultsPerType = type 
+    ? validation.maxResults 
+    : Math.max(2, Math.ceil(validation.maxResults / searchTypes.length));
+  
+  for (const t of searchTypes) {
+    let index: BM25 | null = null;
+    let domainName: string = '';
+    
+    switch (t) {
+      case 'icon':
+        index = iconsIndex;
+        domainName = 'icon';
+        break;
+      case 'chart':
+        index = chartsIndex;
+        domainName = 'chart';
+        break;
+    }
+    
+    if (!index) {
+      continue; // Skip if index not initialized
+    }
+    
+    const typeResults = index.search(validation.query, resultsPerType);
+    results.push(...typeResults.map(r => ({
+      data: r.document.data,
+      score: r.score,
+      _domain: domainName
+    })));
+  }
+  
+  // Sort by score descending and limit to maxResults
+  return results
+    .sort((a, b) => b.score - a.score)
+    .slice(0, validation.maxResults);
+}
+
+/**
+ * Merged search for design patterns: landing layouts, UX guidelines, product recommendations
+ * Combines 3 tools into 1 unified search
+ * @param query - Search query
+ * @param type - Optional filter: 'layout' | 'ux' | 'product'. If omitted, searches all three
+ * @param maxResults - Maximum results to return (default: 5)
+ */
+export function searchPatterns(
+  query: unknown,
+  type?: 'layout' | 'ux' | 'product',
+  maxResults: unknown = 5
+): SearchResponse {
+  const validation = validateSearchInput(query, maxResults);
+  if (!validation.valid) {
+    return { error: validation.error! };
+  }
+
+  // Validate type parameter if provided
+  if (type !== undefined && type !== 'layout' && type !== 'ux' && type !== 'product') {
+    return { error: `Invalid type: ${type}. Must be 'layout', 'ux', or 'product'` };
+  }
+
+  const results: Array<{ data: any; score: number; _domain: string }> = [];
+
+  const searchTypes = type ? [type] : ['layout', 'ux', 'product'];
+  const resultsPerType = type
+    ? validation.maxResults
+    : Math.max(2, Math.ceil(validation.maxResults / searchTypes.length));
+
+  for (const t of searchTypes) {
+    let index: BM25 | null = null;
+    let domainName: string = '';
+
+    switch (t) {
+      case 'layout':
+        index = landingIndex;
+        domainName = 'layout';
+        break;
+      case 'ux':
+        index = uxGuidelinesIndex;
+        domainName = 'ux';
+        break;
+      case 'product':
+        index = productsIndex;
+        domainName = 'product';
+        break;
+    }
+
+    if (!index) {
+      continue; // Skip if index not initialized
+    }
+
+    const typeResults = index.search(validation.query, resultsPerType);
+    results.push(...typeResults.map(r => ({
+      data: r.document.data,
+      score: r.score,
+      _domain: domainName
+    })));
+  }
+
+  // Sort by score descending and limit to maxResults
+  return results
+    .sort((a, b) => b.score - a.score)
+    .slice(0, validation.maxResults);
+}
+
+/**
  * Search landing page patterns
  * @param query - Search query
  * @param maxResults - Maximum results to return (default: 3)
+ * @deprecated Use searchPatterns() for merged search across landing, UX guidelines, products
  */
 export function searchLanding(query: unknown, maxResults: unknown = 3): SearchResponse {
   const validation = validateSearchInput(query, maxResults);
@@ -996,6 +1224,7 @@ export function searchLanding(query: unknown, maxResults: unknown = 3): SearchRe
  * Search product type recommendations
  * @param query - Search query
  * @param maxResults - Maximum results to return (default: 3)
+ * @deprecated Use searchPatterns() for merged search across landing, UX guidelines, products
  */
 export function searchProducts(query: unknown, maxResults: unknown = 3): SearchResponse {
   const validation = validateSearchInput(query, maxResults);

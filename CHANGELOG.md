@@ -5,6 +5,38 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-01-19
+
+### ⚠️ BREAKING CHANGES
+- **Tool consolidation**: Reduced from 12 tools to 6 for better LLM performance
+  - `search_ui_styles`, `search_colors`, `search_typography`, `search_prompts` → **`search_styles`**
+  - `search_icons`, `search_charts` → **`search_components`**
+  - `search_landing`, `search_ux_guidelines`, `search_products` → **`search_patterns`**
+
+### Added
+- **Jetpack Compose stack** (70 entries) - Android/Kotlin Compose guidelines
+- **Domain filtering** for merged tools:
+  - `search_styles`: domain = style | color | typography | prompt
+  - `search_components`: type = icon | chart
+  - `search_patterns`: type = layout | ux | product
+- **Mobile UI/UX 2026 data**:
+  - Flutter: Impeller, 120Hz, Rive, Spring physics (+22 entries)
+  - React Native: Reanimated 3, Skia, Gesture Handler (+21 entries)
+  - SwiftUI: PhaseAnimator, TimelineView, iOS 26 Liquid Glass (+18 entries)
+  - Styles: M3 Expressive, mobile animations (+13 entries)
+  - Landing: Mobile layouts, bottom nav, adaptive screens (+12 entries)
+- **CSV validation script**: `npm run validate:csv`
+- **prepublishOnly hook** with automatic CSV validation
+
+### Changed
+- Improved tool descriptions with WHEN TO USE, RETURNS, EXAMPLES
+- Enhanced `search_all` domain detection
+- Total entries: 1,676+ (from ~1,500)
+
+### Fixed
+- `styles.csv` line ending normalization (CRLF → LF)
+- `landing.csv` CSS formatting issues
+
 ## [1.1.9] - 2026-01-19
 
 ### Added
