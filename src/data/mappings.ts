@@ -10,11 +10,16 @@ export const DOMAIN_MAPPINGS: Record<string, string> = {
   education: "dashboard profile search gallery clean learning course",
   realestate: "map location gallery image search filter property listing",
   travel: "map location gallery image search filter reviews destination booking",
-  saas: "dashboard chart metrics pricing plans table modern analytics",
+  saas: "dashboard chart metrics pricing plans table modern analytics toggle dark mode theme switch scroll navigation footer utility back-to-top accessibility",
   gaming: "dark mode social profile feed gallery modern stream immersive",
   social: "feed profile social gallery search modern community chat",
   news: "feed search bento clean modern image article trending",
   portfolio: "gallery image profile clean modern bento showcase creative",
+
+  // Page Types
+  landing: "hero cta testimonials pricing features section toggle navigation header footer utility scroll dark-mode light-mode theme accessibility back-to-top",
+  dashboard: "analytics chart metrics kpi toggle dark mode theme panel sidebar navigation utility",
+  page: "landing hero section toggle dark mode navigation footer header utility accessibility",
 
   // Concepts
   security: "authentication password validation privacy alerts trust shield",
