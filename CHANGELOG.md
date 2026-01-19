@@ -5,7 +5,14 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.6] - 2025-01-21
+## [1.1.7] - 2026-01-19
+
+### Added
+- **flutter.csv**: 18 new 2026 entries (Dart 3.x records/sealed classes/patterns, Riverpod 2.x code generation, flutter_hooks, Impeller renderer, Material 3, Slivers, auto_route, predictive back, Flutter Web/Desktop, flutter_animate, golden tests, patrol, feature-first architecture, clean architecture, SelectableRegion)
+- **react-native.csv**: 8 new 2026 entries (Fabric renderer, TurboModules, Expo Router, Reanimated 3 with Fabric, shared element transitions, Bridgeless mode, React 18 concurrent features, expo-image)
+- **swiftui.csv**: 10 new 2026 entries (@Observable macro, SwiftData, SwiftData with Observable manager, TipKit, TipGroup.ordered, StoreKit 2 transactions, StoreKit 2 verification, App Intents, Lazy containers, stable IDs)
+
+## [1.1.6] - 2026-01-18
 
 ### Added
 - **styles.csv**: 6 new 2026 styles (Bento Grid, Neubrutalism 2026, Organic Biophilic, VisionOS Spatial, Conversational AI UI, Agentic Workflow UI)

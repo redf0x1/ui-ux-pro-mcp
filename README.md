@@ -7,7 +7,7 @@
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![GitHub stars](https://img.shields.io/github/stars/redf0x1/ui-ux-pro-mcp?style=flat-square)](https://github.com/redf0x1/ui-ux-pro-mcp/stargazers)
 
-> **AI-powered UI/UX design intelligence** — Instantly access 1470+ curated design resources through natural language search.
+> **AI-powered UI/UX design intelligence** — Instantly access 1519+ curated design resources through natural language search.
 
 ---
 
@@ -15,7 +15,7 @@
 
 | Feature | Details |
 |---------|---------|
-| 📚 **1470+ Documents** | Curated design knowledge across 11 domains |
+| 📚 **1519+ Documents** | Curated design knowledge across 11 domains |
 | 🔧 **11 Tools** | Specialized search for styles, colors, typography, charts, icons, and more |
 | ⚡ **BM25 Ranking** | Fast, relevant search results using industry-standard text ranking |
 | 🔗 **Universal** | Works with VS Code, Claude Desktop, Cursor, and any MCP-compatible client |
@@ -178,7 +178,7 @@ Add to your Claude Desktop configuration:
 | `search_landing` | 49 | Landing patterns, Bento Grids (Config & Maps), Responsive Strategy |
 | `search_products` | 114 | Product type design recommendations per industry |
 | `search_prompts` | 39 | AI prompt templates with CSS snippets and implementation checklists |
-| `search_stack` | 660 | Framework-specific guidelines (React, Vue, Next.js, Flutter, etc.) |
+| `search_stack` | 696 | Framework-specific guidelines (React, Vue, Next.js, Flutter, etc.) |
 | `search_all` | All | Unified search across all design domains |
 | `get_design_system` | — | Generate complete design system with colors, typography, UI style, and layout in one call |
 
