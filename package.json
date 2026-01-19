@@ -1,6 +1,6 @@
 {
   "name": "ui-ux-pro-mcp",
-  "version": "1.1.7",
+  "version": "1.1.9",
   "description": "MCP Server for UI/UX design intelligence - styles, colors, typography, charts, icons",
   "main": "dist/index.js",
   "type": "module",
@@ -31,7 +31,8 @@
     "start:http": "PORT=3456 node dist/index.js --http",
     "dev": "tsx watch src/index.ts --http",
     "test": "tsx src/test-server.ts",
-    "prepublishOnly": "npm run build"
+    "validate:csv": "node scripts/validate-csv.js",
+    "prepublishOnly": "npm run validate:csv && npm run build"
   },
   "keywords": [
     "mcp",

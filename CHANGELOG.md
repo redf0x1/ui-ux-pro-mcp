@@ -5,6 +5,28 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.9] - 2026-01-19
+
+### Added
+- **CSV validation script** (`scripts/validate-csv.js`) - Validates all CSV files for formatting issues
+- **npm run validate:csv** command for easy validation
+- **Jetpack Compose stack** (`data/stacks/jetpack-compose.csv`) - 70 entries for Android/Kotlin guidelines
+- **Mobile layouts** in `landing.csv` (+12 entries) - Bottom sheets, FAB patterns, gesture navigation
+- **M3 Expressive styles** in `styles.csv` (+13 entries) - Material 3 Expressive design tokens
+
+### Enhanced
+- **Flutter** (+22 entries) - Impeller renderer, 120Hz optimization, Rive animations, Liquid Glass effects
+- **React Native** (+21 entries) - Reanimated 3 with Fabric, Skia rendering, Gesture Handler 2.x
+- **SwiftUI** (+18 entries) - PhaseAnimator, TimelineView, SF Symbols 5, visionOS spatial
+
+### Fixed
+- `styles.csv` line endings (CRLF → LF)
+- `landing.csv` CSS formatting issues
+- CSV validation integrated into `prepublishOnly` hook
+
+### Stats
+- Total: 21 CSV files, 1,704+ entries, 0 validation errors
+
 ## [1.1.7] - 2026-01-19
 
 ### Added

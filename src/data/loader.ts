@@ -247,6 +247,7 @@ export function loadPrompts(): PromptData[] {
 export const AVAILABLE_STACKS = [
   'flutter',
   'html-tailwind',
+  'jetpack-compose',
   'nextjs',
   'nuxt-ui',
   'nuxtjs',

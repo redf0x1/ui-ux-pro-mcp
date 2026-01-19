@@ -255,6 +255,33 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 5. **Accessibility**: Consider and document accessibility implications
 6. **Consistency**: Match the style and tone of existing entries
 
+### CSV Validation
+
+Run validation before committing changes to CSV files:
+
+```bash
+npm run validate:csv
+```
+
+This validation runs automatically during `npm publish` to ensure data integrity.
+
+#### File Format Best Practices
+
+- **Line endings**: Use Unix-style LF (not Windows CRLF)
+- **Encoding**: UTF-8 without BOM
+- **Quoting**: Wrap fields containing commas in double quotes
+- **Escaping**: Use `""` for literal quotes inside quoted fields
+
+#### Recommended Editors
+
+| Editor | Notes |
+|--------|-------|
+| VS Code with "Edit CSV" extension | Best for syntax highlighting and validation |
+| TablePlus | Good for visual editing |
+| LibreOffice Calc | Save as CSV with UTF-8 encoding |
+
+> ⚠️ **Avoid**: Microsoft Excel may change encoding or formatting unexpectedly
+
 ### Testing Your Data
 
 After adding data, test that it's properly indexed:

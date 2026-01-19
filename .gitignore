@@ -20,5 +20,3 @@ npm-debug.log*
 .env
 .env.local
 TODO.md
-scripts/check-csv.js
-scripts/validate-csv.js
