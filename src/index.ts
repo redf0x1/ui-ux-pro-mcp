@@ -79,18 +79,34 @@ const TOOLS = [
 
 WHEN TO USE: Starting a new project, need cohesive design foundation, want all design elements in one call.
 
-QUERY TIPS: Specify product type and optionally style preference or mode.
+PLATFORM DETECTION: Platform is auto-detected from query keywords (iOS, Android, Flutter, etc.) or can be explicitly specified via the platform parameter.
+- If platform is specified, it overrides auto-detection
+- Platform affects navigation patterns, safe areas, touch targets
 
-RETURNS: Integrated design system with colors (including Tailwind config), typography (with CSS imports), UI style (with CSS code), and landing layout (with CSS grid).
+INTENT DETECTION: Layout is auto-detected based on query structure:
+- Multi-word phrases take priority: "landing page" → landing layout
+- Single keywords scanned left-to-right: "analytics saas" → dashboard (analytics detected first)
+- Position matters: first intent keyword wins
 
-EXAMPLES: "fintech dark glassmorphism", "saas minimal clean", "e-commerce luxury", "startup landing"`,
+INTENT KEYWORDS:
+- For landing layouts: "landing page", "homepage", "website", "hero", "cta"
+- For dashboard layouts: "dashboard", "analytics", "admin panel", "metrics", "kpi"
+
+QUERY TIPS: Place intent keywords at START of query for highest confidence.
+
+RETURNS: Integrated design system with _meta showing detected/resolved platform, intent, colors (with dark_mode if mode="dark"), typography, UI style, and layout with source indicator.
+
+EXAMPLES: "landing page fintech dark glassmorphism", "dashboard analytics saas", "e-commerce website luxury", "admin panel healthcare", "flutter fintech mobile"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: { type: 'string', description: 'Product type or design description (e.g., "fintech dark", "saas minimal", "e-commerce luxury")' },
+        query: { type: 'string', description: 'Product type + intent + style description. Intent keyword placement matters: "landing page saas" → landing layout, "analytics dashboard saas" → dashboard layout. Multi-word phrases like "landing page", "admin panel" have priority over single words.' },
         style: { type: 'string', description: 'Specific style preference (e.g., "glassmorphism", "minimalism", "brutalism")' },
-        mode: { type: 'string', enum: ['light', 'dark'], description: 'Color mode preference' },
-        max_results: { type: 'number', default: 1, minimum: 1, maximum: 5, description: 'Maximum items per domain' }
+        mode: { type: 'string', enum: ['light', 'dark'], description: 'Color mode preference. When "dark", the tool parses Dark_Mode_Colors and returns dark-optimized palette with dark background/text colors.' },
+        max_results: { type: 'number', default: 1, minimum: 1, maximum: 5, description: 'Maximum items per domain' },
+        platform: { type: 'string', enum: ['web', 'mobile-ios', 'mobile-android', 'mobile', 'react-native', 'flutter', 'swiftui', 'expo'], description: 'Target platform for design system. If not specified, will be auto-detected from query. Use to override auto-detection.' },
+        output_format: { type: 'string', enum: ['ai-optimized', 'minimal', 'full', 'structured'], description: "⚠️ RECOMMENDED: Leave empty (defaults to 'ai-optimized' ~3.5K tokens). Only change if you have a specific reason. Options: 'ai-optimized' (default, best for AI coding), 'minimal' (~8K, includes HTML templates), 'full' (⚠️ NOT recommended - 15K+ tokens, programmatic use only), 'structured' (JSON only, no guide)." },
+        include_hover_effects: { type: 'boolean', description: 'Include hover_effects CSS in output. Default: false for ai-optimized, true for other formats.' }
       },
       required: ['query']
     }
@@ -227,6 +243,9 @@ interface ToolArguments {
   mode?: 'light' | 'dark';
   domain?: 'style' | 'color' | 'typography' | 'prompt';  // for search_styles
   type?: 'icon' | 'chart' | 'layout' | 'ux' | 'product';  // for search_components and search_patterns
+  platform?: 'web' | 'mobile-ios' | 'mobile-android' | 'mobile' | 'react-native' | 'flutter' | 'swiftui' | 'expo';  // for get_design_system
+  output_format?: 'ai-optimized' | 'minimal' | 'full' | 'structured';  // for get_design_system output filtering
+  include_hover_effects?: boolean;  // for get_design_system hover effects inclusion
 }
 
 function isSearchError(result: unknown): result is { error: string } {
@@ -240,7 +259,7 @@ function handleToolCall(name: string, args: ToolArguments): CallToolResult {
   switch (name) {
     // 1. Design System Generator
     case 'get_design_system':
-      results = getDesignSystem(query, args.style, args.mode, max_results ?? 1);
+      results = getDesignSystem(query, args.style, args.mode, max_results ?? 1, args.platform, args.output_format, args.include_hover_effects);
       break;
 
     // 2. Unified Search

@@ -182,6 +182,69 @@ Add to your Claude Desktop configuration:
 | `search_all` | All | Unified search across all design domains |
 | `get_design_system` | — | Generate complete design system with colors, typography, UI style, and layout in one call |
 
+### AI-Optimized Query Processing
+
+The `get_design_system` tool uses intelligent query processing optimized for AI model consumers:
+
+#### Position-Weighted Intent Classification
+
+Queries are processed left-to-right with multi-word phrase priority:
+
+1. **Multi-word phrases first**: "landing page", "admin panel", "hero section" have higher priority
+2. **Then single words**: "dashboard", "landing", "analytics"
+3. **Position matters**: Earlier keywords get higher confidence (5% penalty per word position)
+
+**Examples:**
+| Query | Detected Intent | Reason |
+|-------|-----------------|--------|
+| "SaaS landing page dashboard" | landing | "landing page" phrase found |
+| "dashboard for SaaS landing" | dashboard | "dashboard" is first |
+| "admin panel with hero section" | dashboard | "admin panel" phrase beats "hero" |
+| "website for fintech startup" | landing | "website" maps to landing |
+
+#### AI-Optimized Output Structure
+
+The `_meta` field provides transparency for AI models:
+
+```json
+{
+  "_meta": {
+    "query_interpretation": "SaaS landing page with glassmorphism (dark mode)",
+    "detected_intent": "landing",
+    "intent_confidence": 0.85,
+    "matched_keyword": "landing page",
+    "keyword_position": 1,
+    "warnings": []
+  }
+}
+```
+
+#### Dark Mode Color Parsing
+
+When `mode: "dark"`, the tool:
+1. Searches for dark-mode compatible palettes
+2. Parses `Dark_Mode_Colors` JSON from the database
+3. Replaces palette colors with dark mode equivalents
+4. Includes both light and dark mode palettes in response
+
+#### Code-Ready Snippets
+
+Colors include ready-to-paste code:
+```json
+{
+  "colors": {
+    "css_variables": "--primary: #0066FF; --background: #0A0E14; --text: #E5E5E5;",
+    "tailwind_config": "colors: { primary: '#0066FF', ... }"
+  }
+}
+```
+
+#### Layout Source Indicator
+
+The `layout.source` field tells AI models where the layout recommendation came from:
+- `"landing"` - From landing page patterns database
+- `"dashboard"` - From product's dashboard style recommendation
+
 ---
 
 ## 💬 Example Prompts

@@ -28,4 +28,20 @@ export const DOMAIN_MAPPINGS: Record<string, string> = {
   onboarding: "form profile clean modern step guide welcome",
   conversion: "pricing plans reviews trust hero cta signup",
 
+  // Feature keywords for landing pages
+  hero: "hero-centric headline visual banner above-fold primary",
+  pricing: "pricing-focused plans tiers comparison subscription",
+  testimonials: "social-proof reviews trust badges authority",
+  features: "feature-grid benefits highlights showcase",
+  cta: "call-to-action button conversion signup",
+
+  // Page intent helpers
+  website: "landing page hero cta testimonials features section",
+  web: "landing page hero cta section",
+  site: "landing page hero cta section",
+  homepage: "landing hero features cta testimonials pricing",
+  admin: "dashboard panel analytics metrics sidebar",
+  panel: "dashboard admin analytics metrics sidebar",
+  metrics: "dashboard analytics chart kpi data",
+  kpi: "dashboard metrics analytics chart data",
 };

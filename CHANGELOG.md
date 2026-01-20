@@ -5,7 +5,43 @@ All notable changes to UI/UX Pro MCP will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] - 2025-01-19
+## [1.3.0] - 2026-01-20
+
+### Added
+- **Multi-platform support**: Auto-detect platform intent (web/mobile-ios/mobile-android/cross-platform) from query keywords
+- **Platform parameter**: Explicit `platform` parameter to override auto-detection
+- **AI-optimized output format**: New `output_format` parameter with 'ai-optimized' (default ~5K tokens), 'minimal', 'full', 'structured' options
+- **Page intent classification**: Smart detection of landing vs dashboard intent from query
+- **Platform-aware BM25 boosting**: Re-rank search results based on detected platform
+- **40 new mobile UX guidelines** (rows 131-170): Touch targets, reachability, platform-specific patterns, safe areas, gestures
+- **6 new component styles** (rows 97-103): Back-to-top button, footer components, section dividers
+- **Page intent keywords** in mappings.ts for better query understanding
+- **`include_hover_effects` parameter**: Control hover effects CSS inclusion in output
+
+### Changed
+- Default output format changed from 'full' to 'ai-optimized' (~67% token reduction)
+- Markdown guide restructured with 7 numbered steps for better AI adherence
+- Back-to-top button marked as required (was recommended)
+- Checklist moved to TOP of markdown guide
+- [COPY THIS] markers added for code blocks
+
+### Fixed
+- `classifyPageIntent()` now correctly matches "page" keyword (weight increased to 0.6)
+- `output_format` parameter now validates input and returns error for invalid values
+- Intent detection uses original query instead of expanded query for accurate keyword matching
+- "landing page" queries now correctly return landing layouts (not dashboard)
+- Dark mode queries now return dark color palettes
+
+### Internal
+- **Position-weighted intent classification** (`classifyPageIntent`) for left-to-right query processing
+- **Multi-word phrase priority** (e.g., "landing page" beats "dashboard")
+- **`_meta` field** in `get_design_system` output with query interpretation, detected intent, confidence, matched keyword, position, and warnings
+- **Dark mode color parsing** from `Dark_Mode_Colors` JSON field
+- **`css_variables` field** with ready-to-paste CSS custom properties
+- **`layout.source` field** indicating "landing" or "dashboard" source
+- **Test suite**: `test-design-system.ts` with 13 test cases
+
+## [1.2.1] - 2026-01-19
 
 ### Fixed - Data Quality Audit
 - **colors.csv**: Fixed 48+ rows with generic #3B82F6 blue palettes → industry-specific research-backed colors

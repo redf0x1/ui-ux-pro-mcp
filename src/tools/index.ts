@@ -1,7 +1,7 @@
 /**
  * UI/UX Pro Max MCP Tools
  * Export all tool handlers for MCP server integration
- * 
+ *
  * Consolidated 6-tool architecture:
  * 1. getDesignSystem - Complete design system generator
  * 2. searchAll - Unified search across all domains
@@ -44,7 +44,8 @@ export {
   type SearchResult,
   type DataStats,
   type DomainMatch,
-  type DesignSystemResult
+  type DesignSystemResult,
+  type PlatformParameter
 } from './handlers.js';
 
 // Re-export data types for consumers

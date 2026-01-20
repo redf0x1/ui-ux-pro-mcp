@@ -65,11 +65,11 @@ async function testServer() {
     process.exit(1);
   }
 
-  // Test 4: Call search_ui_styles
-  console.log('Test 4: Call search_ui_styles');
+  // Test 4: Call search_styles
+  console.log('Test 4: Call search_styles');
   try {
     const result = await client.callTool({
-      name: 'search_ui_styles',
+      name: 'search_styles',
       arguments: { query: 'modern minimal', max_results: 2 }
     });
 
@@ -89,12 +89,12 @@ async function testServer() {
     process.exit(1);
   }
 
-  // Test 5: Call search_colors
-  console.log('Test 5: Call search_colors');
+  // Test 5: Call search_styles for colors
+  console.log('Test 5: Call search_styles (colors)');
   try {
     const result = await client.callTool({
-      name: 'search_colors',
-      arguments: { query: 'fintech professional', max_results: 2 }
+      name: 'search_styles',
+      arguments: { query: 'fintech professional', domain: 'color', max_results: 2 }
     });
 
     const content = result.content as Array<{ type: string; text: string }>;
