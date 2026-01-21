@@ -20,10 +20,6 @@ npm-debug.log*
 .env
 .env.local
 TODO.md
-scripts/test-output-format.cjs
-scripts/test-platform-boost.cjs
-scripts/test-cta-text.cjs
-scripts/test-design-system-output.cjs
-scripts/verify-markdown-guide.cjs
 src/tools/test-design-system.ts
 src/test-server.ts
+scripts/*

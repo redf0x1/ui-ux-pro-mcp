@@ -27,6 +27,7 @@ import {
   searchComponents,
   searchPatterns,
   searchStack,
+  searchPlatforms,
   searchAll,
   getDataStats,
   getDesignSystem
@@ -82,6 +83,7 @@ WHEN TO USE: Starting a new project, need cohesive design foundation, want all d
 PLATFORM DETECTION: Platform is auto-detected from query keywords (iOS, Android, Flutter, etc.) or can be explicitly specified via the platform parameter.
 - If platform is specified, it overrides auto-detection
 - Platform affects navigation patterns, safe areas, touch targets
+- When iOS keywords (ios, swiftui, cupertino) or Android keywords (android, material 3, jetpack compose) are detected, returns platform_guidelines with HIG/Material patterns and cross-platform code equivalents (Flutter_Equiv, RN_Equiv)
 
 INTENT DETECTION: Layout is auto-detected based on query structure:
 - Multi-word phrases take priority: "landing page" → landing layout
@@ -94,9 +96,9 @@ INTENT KEYWORDS:
 
 QUERY TIPS: Place intent keywords at START of query for highest confidence.
 
-RETURNS: Integrated design system with _meta showing detected/resolved platform, intent, colors (with dark_mode if mode="dark"), typography, UI style, and layout with source indicator.
+RETURNS: Integrated design system with _meta showing detected/resolved platform, intent, colors (with dark_mode if mode="dark"), typography, UI style, layout with source indicator, and platform_guidelines when iOS/Android detected.
 
-EXAMPLES: "landing page fintech dark glassmorphism", "dashboard analytics saas", "e-commerce website luxury", "admin panel healthcare", "flutter fintech mobile"`,
+EXAMPLES: "landing page fintech dark glassmorphism", "dashboard analytics saas", "e-commerce website luxury", "admin panel healthcare", "flutter fintech mobile", "ios finance app", "android material dashboard"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -115,15 +117,17 @@ EXAMPLES: "landing page fintech dark glassmorphism", "dashboard analytics saas",
   // 2. Smart Unified Search
   {
     name: 'search_all',
-    description: `Unified search across ALL design domains with intelligent auto-detection. Searches: styles, colors, typography, charts, icons, ux-guidelines, landing, products, prompts.
+    description: `Unified search across ALL design domains with intelligent auto-detection. Searches: styles, colors, typography, charts, icons, ux-guidelines, landing, products, prompts, platforms (iOS HIG, Android Material 3).
 
 WHEN TO USE: DEFAULT tool for broad queries. Use when unsure which specific tool, or need multi-domain results.
+
+PLATFORM DETECTION: Platform keywords (ios, swiftui, cupertino, android, material, jetpack compose) trigger platform-specific results with cross-platform code equivalents (Flutter_Equiv, RN_Equiv).
 
 QUERY TIPS: Use natural language describing your design goal. System auto-detects relevant domains.
 
 RETURNS: Results grouped by domain with relevance scores. Each domain returns its specific fields.
 
-EXAMPLES: "modern fintech dashboard dark", "e-commerce checkout ux", "startup landing complete"`,
+EXAMPLES: "modern fintech dashboard dark", "ios button design", "android navigation patterns", "e-commerce checkout ux", "startup landing complete"`,
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -228,6 +232,32 @@ EXAMPLES: "react state management", "flutter animation", "swiftui navigation"`,
       },
       required: ['stack_name', 'query']
     }
+  },
+
+  // 7. Platform-Specific Search (iOS HIG, Android Material 3)
+  {
+    name: 'search_platforms',
+    description: `Search iOS Human Interface Guidelines or Android Material 3 design patterns specifically.
+
+WHEN TO USE: iOS design patterns, SwiftUI style in Flutter, Material 3 patterns in React Native, platform-specific UI/UX.
+
+RETURNS: Platform-specific patterns with cross-platform implementation code (Flutter_Equiv, RN_Equiv).
+
+PARAMETERS:
+- query: Search query (e.g., 'button colors navigation')
+- platform_name: 'ios' or 'android' (optional, searches all if omitted)
+- max_results: Number of results (default 5)
+
+EXAMPLES: "ios navigation patterns", "android material button", "swiftui style flutter", "ios safe area", "material 3 color system"`,
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        query: { type: 'string', description: 'Search query for platform patterns' },
+        platform_name: { type: 'string', enum: ['ios', 'android'], description: 'Platform to search (ios or android). If omitted, searches all platforms.' },
+        max_results: { type: 'number', default: 5, minimum: 1, maximum: 50, description: 'Maximum number of results to return' }
+      },
+      required: ['query']
+    }
   }
 ];
 
@@ -239,6 +269,7 @@ interface ToolArguments {
   query: string;
   max_results?: number;
   stack_name?: string;
+  platform_name?: 'ios' | 'android';  // for search_platforms
   style?: string;
   mode?: 'light' | 'dark';
   domain?: 'style' | 'color' | 'typography' | 'prompt';  // for search_styles
@@ -285,6 +316,11 @@ function handleToolCall(name: string, args: ToolArguments): CallToolResult {
     // 6. Framework Stack
     case 'search_stack':
       results = searchStack(stack_name, query, max_results ?? 3);
+      break;
+
+    // 7. Platform-Specific (iOS HIG, Android Material 3)
+    case 'search_platforms':
+      results = searchPlatforms(query, args.platform_name, max_results ?? 5);
       break;
 
     default:

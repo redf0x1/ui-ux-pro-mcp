@@ -239,6 +239,22 @@ export interface StackData {
   'Docs URL': string;
 }
 
+// Based on platform CSV files (ios.csv): No, Category, Pattern, Description, Do, Don't,
+// iOS_Value, Flutter_Equiv, RN_Equiv, Severity, Docs_URL
+export interface PlatformData {
+  No: string;
+  Category: string;
+  Pattern: string;
+  Description: string;
+  Do: string;
+  "Don't": string;
+  iOS_Value: string;
+  Flutter_Equiv: string;
+  RN_Equiv: string;
+  Severity: string;
+  Docs_URL: string;
+}
+
 export function loadPrompts(): PromptData[] {
   return loadCSV<PromptData>('prompts.csv');
 }
@@ -283,4 +299,36 @@ export function loadAllStacks(): Map<string, StackData[]> {
 
 export function getAvailableStacks(): string[] {
   return [...AVAILABLE_STACKS];
+}
+
+// Available platform names
+export const AVAILABLE_PLATFORMS = [
+  'ios',
+  'android'
+] as const;
+
+export type PlatformName = typeof AVAILABLE_PLATFORMS[number];
+
+export function loadPlatform(platformName: string): PlatformData[] {
+  const normalizedName = platformName.toLowerCase().trim();
+  if (!AVAILABLE_PLATFORMS.includes(normalizedName as PlatformName)) {
+    console.warn(`Unknown platform: ${platformName}. Available platforms: ${AVAILABLE_PLATFORMS.join(', ')}`);
+    return [];
+  }
+  return loadCSV<PlatformData>(`platforms/${normalizedName}.csv`);
+}
+
+export function loadAllPlatforms(): Map<string, PlatformData[]> {
+  const platforms = new Map<string, PlatformData[]>();
+  for (const platformName of AVAILABLE_PLATFORMS) {
+    const data = loadPlatform(platformName);
+    if (data.length > 0) {
+      platforms.set(platformName, data);
+    }
+  }
+  return platforms;
+}
+
+export function getAvailablePlatforms(): string[] {
+  return [...AVAILABLE_PLATFORMS];
 }

@@ -7,7 +7,7 @@
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![GitHub stars](https://img.shields.io/github/stars/redf0x1/ui-ux-pro-mcp?style=flat-square)](https://github.com/redf0x1/ui-ux-pro-mcp/stargazers)
 
-> **AI-powered UI/UX design intelligence** — Instantly access 1,700+ curated design resources through natural language search.
+> **AI-powered UI/UX design intelligence** — Instantly access 1,920+ curated design resources through natural language search.
 
 ---
 
@@ -15,11 +15,19 @@
 
 | Feature | Details |
 |---------|---------|
-| 📚 **1,700+ Documents** | Curated design knowledge across 11 domains |
+| 📚 **1,920+ Documents** | Curated design knowledge across 11 domains + 2 platforms |
 | 🔧 **6 Tools** | Consolidated search tools optimized for LLM performance |
 | ⚡ **BM25 Ranking** | Fast, relevant search results using industry-standard text ranking |
 | 🔗 **Universal** | Works with VS Code, Claude Desktop, Cursor, and any MCP-compatible client |
 | 🎯 **12 Frameworks** | Stack-specific guidelines for React, Vue, Next.js, Flutter, SwiftUI, Jetpack Compose, and more |
+| 📱 **Platform Guidelines** | iOS Human Interface Guidelines (110) + Android Material 3 (112) with cross-platform equivalents |
+
+### Platform-Specific Design
+
+- **iOS Human Interface Guidelines** (110 patterns) — Colors, typography, navigation, gestures, accessibility with SwiftUI, Flutter, React Native code
+- **Android Material 3 Design** (112 patterns) — Dynamic color, typography, components, elevation, motion with Compose, Flutter, React Native code
+- **Cross-platform code equivalents** — Every pattern includes Flutter_Equiv and RN_Equiv for building native-feeling apps without native code
+- **Auto-detection from keywords** — Queries containing iOS/Android keywords automatically boost platform-specific results
 
 ---
 
@@ -274,6 +282,38 @@ Use these with Claude, Cursor, or any MCP-compatible AI:
 "Vue 3 composition API patterns"
 "Next.js App Router guidelines"
 "Flutter state management recommendations"
+
+📱 Platform Guidelines (NEW)
+"iOS navigation patterns"
+"Android Material 3 color system"
+"SwiftUI style without Swift" → Flutter/RN equivalents
+"iOS typography guidelines with Flutter equivalent"
+"Android dynamic color implementation"
+```
+
+### Platform Keyword Triggers
+
+The search engine automatically detects platform intent from these keywords:
+
+| Platform | Trigger Keywords |
+|----------|------------------|
+| **iOS** | `ios`, `swiftui`, `cupertino`, `iphone`, `ipad`, `apple design`, `hig`, `sf symbols` |
+| **Android** | `android`, `material 3`, `material design`, `jetpack compose`, `kotlin ui`, `dynamic color`, `m3` |
+
+### Cross-Platform Query Examples
+
+```
+🍎 iOS Design Without Swift
+Query: "SwiftUI style flutter e-commerce"
+Returns: iOS HIG patterns with Flutter_Equiv code (CupertinoWidgets)
+
+🤖 Android Material 3
+Query: "material design android dashboard"
+Returns: Material 3 patterns with Compose, Flutter, RN equivalents
+
+🔄 Cross-Platform Patterns
+Query: "iOS navigation patterns react native"
+Returns: iOS navigation guidelines with RN_Equiv implementations
 ```
 
 ---
@@ -294,9 +334,19 @@ This server aggregates curated design intelligence from multiple domains:
 | Products | `products.csv` | 114 | Industry design recommendations |
 | Prompts | `prompts.csv` | 39 | AI prompt templates |
 | Stacks | `stacks/*.csv` | 766 | Framework-specific guidelines (12 stacks) |
+| **iOS** | `platforms/ios.csv` | 110 | iOS Human Interface Guidelines with cross-platform equivalents |
+| **Android** | `platforms/android.csv` | 112 | Android Material 3 Design with cross-platform equivalents |
 
 **Available Framework Stacks:**
 `flutter` · `html-tailwind` · `jetpack-compose` · `nextjs` · `nuxt-ui` · `nuxtjs` · `react-native` · `react` · `shadcn` · `svelte` · `swiftui` · `vue`
+
+**Platform-Specific Guidelines:**
+`ios` (110 entries) · `android` (112 entries)
+
+Platform data includes:
+- **Flutter_Equiv**: CupertinoWidgets/Material widget equivalents
+- **RN_Equiv**: React Native implementation patterns
+- **Categories**: Colors, Typography, Spacing, Components, Navigation, Gestures/Shapes, Animation/Motion, Icons, Layout, Accessibility
 
 ---
 
@@ -401,7 +451,8 @@ ui-ux-pro-mcp/
 │       └── handlers.ts   # Search handlers
 ├── data/
 │   ├── *.csv             # Design domain data files
-│   └── stacks/           # Framework-specific guidelines
+│   ├── stacks/           # Framework-specific guidelines (12 stacks)
+│   └── platforms/        # Platform guidelines (iOS HIG, Android M3)
 └── dist/                 # Compiled JavaScript output
 ```
 

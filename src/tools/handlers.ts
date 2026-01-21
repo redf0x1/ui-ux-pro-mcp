@@ -8,9 +8,11 @@ import {
   loadStyles, loadColors, loadTypography, loadCharts,
   loadUXGuidelines, loadIcons, loadLanding, loadProducts,
   loadPrompts, loadStack, loadAllStacks, getAvailableStacks,
+  loadPlatform, loadAllPlatforms, getAvailablePlatforms,
   StyleData, ColorData, TypographyData, ChartData,
   UXGuidelineData, IconData, LandingData, ProductData,
-  PromptData, StackData, AVAILABLE_STACKS
+  PromptData, StackData, PlatformData,
+  AVAILABLE_STACKS, AVAILABLE_PLATFORMS
 } from '../data/loader.js';
 import { DOMAIN_MAPPINGS } from '../data/mappings.js';
 
@@ -154,6 +156,44 @@ const domainKeywordsWeighted: Record<string, KeywordEntry[]> = {
     { keyword: "symbol", weight: 0.4 },
     { keyword: "glyph", weight: 0.5 },
     { keyword: "pictogram", weight: 0.6 }
+  ],
+  platform: [
+    // iOS keywords
+    { keyword: "ios guideline", weight: 1.0 },
+    { keyword: "ios hig", weight: 1.0 },
+    { keyword: "human interface", weight: 0.95 },
+    { keyword: "apple design", weight: 0.95 },
+    { keyword: "ios native", weight: 0.9 },
+    { keyword: "ios pattern", weight: 0.9 },
+    { keyword: "cupertino", weight: 0.85 },
+    { keyword: "uikit", weight: 0.85 },
+    { keyword: "ios color", weight: 0.8 },
+    { keyword: "ios typography", weight: 0.8 },
+    { keyword: "ios navigation", weight: 0.8 },
+    { keyword: "safe area", weight: 0.75 },
+    { keyword: "notch", weight: 0.7 },
+    { keyword: "home indicator", weight: 0.75 },
+    { keyword: "dynamic island", weight: 0.8 },
+    // Android keywords
+    { keyword: "android guideline", weight: 1.0 },
+    { keyword: "material design", weight: 1.0 },
+    { keyword: "material 3", weight: 1.0 },
+    { keyword: "m3", weight: 0.95 },
+    { keyword: "material you", weight: 0.95 },
+    { keyword: "google design", weight: 0.9 },
+    { keyword: "android native", weight: 0.9 },
+    { keyword: "android pattern", weight: 0.9 },
+    { keyword: "jetpack compose", weight: 0.95 },
+    { keyword: "compose", weight: 0.7 },
+    { keyword: "kotlin ui", weight: 0.85 },
+    { keyword: "android hig", weight: 0.9 },
+    { keyword: "android color", weight: 0.8 },
+    { keyword: "android typography", weight: 0.8 },
+    { keyword: "android navigation", weight: 0.8 },
+    { keyword: "dynamic color", weight: 0.85 },
+    { keyword: "tonal elevation", weight: 0.8 },
+    { keyword: "material", weight: 0.6 },
+    { keyword: "android", weight: 0.6 }
   ]
 };
 
@@ -296,7 +336,8 @@ const domainKeywords: Record<string, string[]> = {
   style: ["style", "design", "ui", "minimalism", "glassmorphism", "neumorphism", "brutalism", "dark mode", "flat", "aurora"],
   ux: ["ux", "usability", "accessibility", "wcag", "touch", "scroll", "animation", "keyboard", "navigation", "mobile"],
   typography: ["font", "typography", "heading", "serif", "sans"],
-  icons: ["icon", "icons", "lucide", "heroicons", "symbol", "glyph", "pictogram", "svg icon"]
+  icons: ["icon", "icons", "lucide", "heroicons", "symbol", "glyph", "pictogram", "svg icon"],
+  platform: ["ios", "hig", "human interface", "apple design", "cupertino", "uikit", "safe area", "notch", "dynamic island", "android", "material", "material design", "material 3", "m3", "material you", "google design", "jetpack compose", "compose", "kotlin ui", "dynamic color", "tonal elevation"]
 };
 
 /**
@@ -311,7 +352,8 @@ const domainToTypeMap: Record<string, string> = {
   style: 'style',
   ux: 'ux-guideline',
   typography: 'typography',
-  icons: 'icon'
+  icons: 'icon',
+  platform: 'platform'
 };
 
 /**
@@ -499,6 +541,7 @@ let landingIndex: BM25 | null = null;
 let productsIndex: BM25 | null = null;
 let promptsIndex: BM25 | null = null;
 let stackIndexes: Map<string, BM25> = new Map();
+let platformIndexes: Map<string, BM25> = new Map();
 
 // All documents for unified search
 let allDocuments: Document[] = [];
@@ -515,6 +558,7 @@ let landingData: LandingData[] = [];
 let productsData: ProductData[] = [];
 let promptsData: PromptData[] = [];
 let stacksData: Map<string, StackData[]> = new Map();
+let platformsData: Map<string, PlatformData[]> = new Map();
 
 /**
  * Create searchable content from style data
@@ -677,6 +721,22 @@ function createStackContent(stack: StackData): string {
 }
 
 /**
+ * Create searchable content from platform guideline data
+ */
+function createPlatformContent(platform: PlatformData): string {
+  return [
+    platform.Category || '',
+    platform.Pattern || '',
+    platform.Description || '',
+    platform.Do || '',
+    platform["Don't"] || '',
+    platform.iOS_Value || '',
+    platform.Flutter_Equiv || '',
+    platform.RN_Equiv || ''
+  ].filter(Boolean).join(' ');
+}
+
+/**
  * Initialize all BM25 indexes with loaded data
  */
 export function initializeIndexes(): void {
@@ -693,8 +753,9 @@ export function initializeIndexes(): void {
   productsData = loadProducts();
   promptsData = loadPrompts();
   stacksData = loadAllStacks();
+  platformsData = loadAllPlatforms();
 
-  console.error(`Loaded: ${stylesData.length} styles, ${colorsData.length} colors, ${typographyData.length} typography, ${chartsData.length} charts, ${uxGuidelinesData.length} UX guidelines, ${iconsData.length} icons, ${landingData.length} landing patterns, ${productsData.length} products, ${promptsData.length} prompts, ${stacksData.size} stacks`);
+  console.error(`Loaded: ${stylesData.length} styles, ${colorsData.length} colors, ${typographyData.length} typography, ${chartsData.length} charts, ${uxGuidelinesData.length} UX guidelines, ${iconsData.length} icons, ${landingData.length} landing patterns, ${productsData.length} products, ${promptsData.length} prompts, ${stacksData.size} stacks, ${platformsData.size} platforms`);
 
   // Create style documents
   const styleDocs: Document[] = stylesData.map((style, idx) => ({
@@ -774,6 +835,21 @@ export function initializeIndexes(): void {
     }
   }
 
+  // Create platform documents and indexes
+  platformIndexes.clear();
+  const allPlatformDocs: Document[] = [];
+  for (const [platformName, platformData] of platformsData) {
+    const platformDocs: Document[] = platformData.map((item, idx) => ({
+      id: `platform-${platformName}-${idx}`,
+      content: createPlatformContent(item),
+      data: { type: 'platform', platformName, ...item }
+    }));
+    if (platformDocs.length > 0) {
+      platformIndexes.set(platformName, new BM25(platformDocs));
+      allPlatformDocs.push(...platformDocs);
+    }
+  }
+
   // Create individual indexes
   if (styleDocs.length > 0) {
     stylesIndex = new BM25(styleDocs);
@@ -814,7 +890,8 @@ export function initializeIndexes(): void {
     ...landingDocs,
     ...productDocs,
     ...promptDocs,
-    ...allStackDocs
+    ...allStackDocs,
+    ...allPlatformDocs
   ];
 
   if (allDocuments.length > 0) {
@@ -1483,6 +1560,69 @@ export function listAvailableStacks(): string[] {
   return getAvailableStacks();
 }
 
+/**
+ * Search platform-specific guidelines (iOS HIG, etc.)
+ * @param query - Search query
+ * @param platformName - Optional platform name (ios). If omitted, searches all platforms
+ * @param maxResults - Maximum results to return (default: 5)
+ */
+export function searchPlatforms(
+  query: unknown,
+  platformName?: string,
+  maxResults: unknown = 5
+): SearchResponse {
+  const validation = validateSearchInput(query, maxResults);
+  if (!validation.valid) {
+    return { error: validation.error! };
+  }
+
+  // If platform specified, validate and search that platform only
+  if (platformName !== undefined && platformName !== null) {
+    const platformNameStr = String(platformName).toLowerCase().trim();
+
+    if (!AVAILABLE_PLATFORMS.includes(platformNameStr as any)) {
+      return {
+        error: `Unknown platform: "${platformNameStr}". Available platforms: ${AVAILABLE_PLATFORMS.join(', ')}`
+      };
+    }
+
+    const index = platformIndexes.get(platformNameStr);
+    if (!index) {
+      return { error: `Platform index not initialized for: ${platformNameStr}` };
+    }
+
+    const results = index.search(validation.query, validation.maxResults);
+    return results.map(r => ({
+      data: r.document.data,
+      score: r.score
+    }));
+  }
+
+  // Search across all platforms
+  const results: SearchResult[] = [];
+  const resultsPerPlatform = Math.max(2, Math.ceil(validation.maxResults / platformIndexes.size));
+
+  for (const [name, index] of platformIndexes) {
+    const platformResults = index.search(validation.query, resultsPerPlatform);
+    results.push(...platformResults.map(r => ({
+      data: { ...r.document.data, _platform: name },
+      score: r.score
+    })));
+  }
+
+  // Sort by score descending and limit to maxResults
+  return results
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .slice(0, validation.maxResults);
+}
+
+/**
+ * List available platforms
+ */
+export function listAvailablePlatforms(): string[] {
+  return getAvailablePlatforms();
+}
+
 // ============================================================================
 // STATISTICS & INFO
 // ============================================================================
@@ -1498,6 +1638,7 @@ export interface DataStats {
   products: number;
   prompts: number;
   stacks: { [key: string]: number };
+  platforms: { [key: string]: number };
   total: number;
 }
 
@@ -1508,6 +1649,11 @@ export function getDataStats(): DataStats {
   const stackStats: { [key: string]: number } = {};
   for (const [name, data] of stacksData) {
     stackStats[name] = data.length;
+  }
+
+  const platformStats: { [key: string]: number } = {};
+  for (const [name, data] of platformsData) {
+    platformStats[name] = data.length;
   }
 
   return {
@@ -1521,6 +1667,7 @@ export function getDataStats(): DataStats {
     products: productsData.length,
     prompts: promptsData.length,
     stacks: stackStats,
+    platforms: platformStats,
     total: allDocuments.length
   };
 }
@@ -1735,12 +1882,13 @@ const PLATFORM_KEYWORDS: Record<string, { keyword: string; weight: number }[]> =
     { keyword: 'touch target', weight: 0.5 },
     { keyword: 'hit area', weight: 0.6 },
     { keyword: 'dynamic type', weight: 0.9 },
-    { keyword: 'ios app', weight: 0.9 },
-    { keyword: 'iphone', weight: 0.8 },
-    { keyword: 'ipad', weight: 0.8 },
+    { keyword: 'ios app', weight: 1.0 },
+    { keyword: 'iphone', weight: 0.9 },
+    { keyword: 'ipad', weight: 0.9 },
     { keyword: 'uikit', weight: 1.0 },
     { keyword: 'swiftui', weight: 1.0 },
-    { keyword: 'ios', weight: 0.7 }
+    { keyword: 'ios', weight: 1.0 },
+    { keyword: 'cupertino', weight: 1.0 }
   ],
   // Mobile Android Keywords (2025)
   'mobile-android': [
@@ -2248,6 +2396,17 @@ export interface DesignSystemResult {
   };
   ux_tips?: string[];
   hover_effects?: string;
+  platform_guidelines?: {
+    platform: 'ios' | 'android';
+    patterns: {
+      category: string;
+      pattern: string;
+      description: string;
+      do: string;
+      flutter_equiv: string;
+      rn_equiv: string;
+    }[];
+  } | null;
 }
 
 /**
@@ -2649,19 +2808,38 @@ export function getDesignSystem(
   // NEW: Classify page intent (left-to-right scanning)
   const intentResult = classifyPageIntent(validation.originalQuery);
 
-  // Auto-detect platform intent from query
+  // Auto-detect platform intent from query - ALWAYS detect from keywords
   const autoDetectedPlatform = detectPlatformIntent(validation.originalQuery);
 
-  // Resolve platform: use specified platform (override) or auto-detected
+  // NEW: Separate design platform (iOS/Android from keywords) from output framework (flutter/RN from param)
+  // Design platform = what design language to use (iOS HIG, Material Design)
+  // Output framework = what code format to output (Flutter, React Native, SwiftUI)
   const specifiedPlatform = platformStr || null;
-  const resolvedPlatform: PlatformIntentResult['platform'] = platformStr
-    ? mapPlatformParameter(platformStr)
-    : autoDetectedPlatform.platform;
+  
+  // For cross-platform frameworks (flutter, react-native, expo), use query keyword detection for design platform
+  // This allows "SwiftUI style" + platform="flutter" to detect iOS design with Flutter output
+  const isCrossPlatformFramework = platformStr && ['flutter', 'react-native', 'expo'].includes(platformStr);
+  
+  // Resolved platform: For cross-platform frameworks, use keyword detection; otherwise use specified platform
+  const resolvedPlatform: PlatformIntentResult['platform'] = isCrossPlatformFramework
+    ? autoDetectedPlatform.platform  // Use keyword detection (e.g., SwiftUI → mobile-ios)
+    : (platformStr ? mapPlatformParameter(platformStr) : autoDetectedPlatform.platform);
+  
+  // Framework: Use specified framework, or infer from platform parameter
   const resolvedFramework = platformStr
     ? mapPlatformToFramework(platformStr) || autoDetectedPlatform.framework
     : autoDetectedPlatform.framework;
-  const platformConfidence = platformStr ? 1.0 : autoDetectedPlatform.confidence;
-  const platformKeywords = platformStr ? [platformStr] : autoDetectedPlatform.matched_keywords;
+  
+  // Confidence: For cross-platform frameworks, use keyword detection confidence
+  const platformConfidence = isCrossPlatformFramework
+    ? autoDetectedPlatform.confidence
+    : (platformStr ? 1.0 : autoDetectedPlatform.confidence);
+  
+  // Keywords: ALWAYS include query keywords, plus specified platform if any
+  const platformKeywords = [
+    ...autoDetectedPlatform.matched_keywords,
+    ...(platformStr && !autoDetectedPlatform.matched_keywords.includes(platformStr) ? [platformStr] : [])
+  ];
 
   // NEW: Build _meta object - use original query for display, not expanded query
   const meta: DesignSystemResult['_meta'] & {
@@ -2689,6 +2867,42 @@ export function getDesignSystem(
   // Add warning if both landing and dashboard keywords found
   if (hasConflictingIntents(validation.query)) {
     meta.warnings.push('Query mentions both landing and dashboard - using first detected intent');
+  }
+
+  // Fetch platform-specific guidelines if mobile platform detected
+  let platformGuidelines: DesignSystemResult['platform_guidelines'] = null;
+  if (resolvedPlatform === 'mobile-ios' && platformIndexes.has('ios')) {
+    const platformResults = searchPlatforms(baseQuery, 'ios', 5);
+    if (Array.isArray(platformResults) && platformResults.length > 0) {
+      platformGuidelines = {
+        platform: 'ios',
+        patterns: platformResults.map((r: any) => ({
+          category: r.data.Category || '',
+          pattern: r.data.Pattern || '',
+          description: r.data.Description || '',
+          do: r.data.Do || '',
+          flutter_equiv: r.data.Flutter_Equiv || '',
+          rn_equiv: r.data.RN_Equiv || ''
+        }))
+      };
+    }
+  }
+  // Similar for Android
+  if (resolvedPlatform === 'mobile-android' && platformIndexes.has('android')) {
+    const platformResults = searchPlatforms(baseQuery, 'android', 5);
+    if (Array.isArray(platformResults) && platformResults.length > 0) {
+      platformGuidelines = {
+        platform: 'android',
+        patterns: platformResults.map((r: any) => ({
+          category: r.data.Category || '',
+          pattern: r.data.Pattern || '',
+          description: r.data.Description || '',
+          do: r.data.Do || '',
+          flutter_equiv: r.data.Flutter_Equiv || '',
+          rn_equiv: r.data.RN_Equiv || ''
+        }))
+      };
+    }
   }
 
   // 1. Search products domain
@@ -3528,7 +3742,8 @@ nav a:hover::after, .nav-link:hover::after {
     navigation: Object.keys(navigation).length > 0 ? navigation : undefined,
     components: Object.keys(components).length > 0 ? components : undefined,
     ux_tips: uxTips.length > 0 ? uxTips : undefined,
-    hover_effects: hoverEffectsCSS
+    hover_effects: hoverEffectsCSS,
+    platform_guidelines: platformGuidelines
   };
 
   // Filter output based on output_format parameter (default: 'ai-optimized' for smallest context)
@@ -3558,7 +3773,8 @@ nav a:hover::after, .nav-link:hover::after {
       product: null,
       style: null,
       typography: null,
-      layout: null
+      layout: null,
+      platform_guidelines: fullResult.platform_guidelines
     } as unknown as DesignSystemResult;
     // Only add hover_effects if explicitly requested
     if (includeHover && fullResult.hover_effects) {
@@ -3584,7 +3800,8 @@ nav a:hover::after, .nav-link:hover::after {
       product: null,
       style: null,
       typography: null,
-      layout: null
+      layout: null,
+      platform_guidelines: fullResult.platform_guidelines
     } as DesignSystemResult;
   } else if (format === 'structured') {
     // Return only JSON data, no markdown (for programmatic consumption)
@@ -3601,7 +3818,8 @@ nav a:hover::after, .nav-link:hover::after {
       navigation: fullResult.navigation,
       components: fullResult.components,
       ux_tips: fullResult.ux_tips,
-      hover_effects: fullResult.hover_effects
+      hover_effects: fullResult.hover_effects,
+      platform_guidelines: fullResult.platform_guidelines
     };
   }
 
